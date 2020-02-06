@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add a user to Sheet hosted by Google</title>
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    <style name="form-style">
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var submit = $("button[type='submit']");
+            submit.click(function () {
+                dt = document.getElementById("mess_area");
+                while (dt.firstChild) {
+                    dt.removeChild(dt.firstChild);
+                }
+                var data = $('form#test-form').serialize();
+
+                data = data + "&status=Waiting&imglink=";
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
+                    dataType: 'json',
+                    crossDomain: true,
+                    data: data,
+                    success: function (data) {
+                        dt = document.getElementById("mess_area");
+                        if (data == 'false') {
+                            dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can upload data!</font><br>');
+
+                        } else {
+                            dt.insertAdjacentHTML('beforeend', '<font color="green">Upload data complete!</font><br>');
+
+                            document.getElementById('name').value = '';
+                            document.getElementById('author').value = '';
+                        }
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+
+    <h4>Quyên góp Sách</h4>
+    <form id="test-form" autocomplete="off">
+        <input type="text" id='name' name="name" placeholder="Họ Tên" /> <br /><br/>
+        <input type="text" id='donator_id' name="donator_id" placeholder="MSSV" /> <br /><br/>
+        <input type="text" id='email' name="email" placeholder="Email" /> <br /><br/>
+        <input type="text" id='phone' name="phone" placeholder="Số điện thoại" /> <br /><br/>
+        <input type="text" id='address' name="address" placeholder="Địa chỉ hiện tại" /> <br /><br/>
+
+
+        <input type="text" id='book_name' name="book_name" placeholder="Tên Sách" /> <br />
+        <input type="text" id='author' name="author" placeholder="Tác giả" /> <br />
+        
+        <input type="text" id='category' name="category" placeholder="Thể Loại" /> <br />
+        <input type="text" id='description' name="description" placeholder="Tóm tắt nội dung" /> <br />
+        
+        
+        <div id="mess_area"> </div>
+        <button type="submit" id="submit-form">Gửi</button>
+    </form>
+</body>
+
+</html>

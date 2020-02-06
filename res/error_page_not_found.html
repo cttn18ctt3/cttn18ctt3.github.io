@@ -1,0 +1,61 @@
+<html>
+
+<head>
+    <title>Lỗi</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script lang="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.12.4/xlsx.core.min.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+
+        var query = "";
+        var query_string;
+
+        function parse_query_string(query) {
+            var vars = query.split("&");
+            var query_string = {};
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].replace("=", "*").split("*"); // fix 
+                var key = decodeURIComponent(pair[0]);
+                var value = decodeURIComponent(pair[1]);
+                // If first entry with this name
+                if (typeof query_string[key] === "undefined") {
+                    query_string[key] = decodeURIComponent(value);
+                    // If second entry with this name
+                } else if (typeof query_string[key] === "string") {
+                    var arr = [query_string[key], decodeURIComponent(value)];
+                    query_string[key] = arr;
+                    // If third or later entry with this name
+                } else {
+                    query_string[key].push(decodeURIComponent(value));
+                }
+            }
+            return query_string;
+        }
+
+
+        $(document).ready(function () {
+
+            query = window.location.search.substring(1);
+
+            query_string = parse_query_string(query);
+
+            if (typeof query_string["href"] === "undefined") {
+
+            }
+            else {
+                document.getElementById("error_link").textContent = query_string["href"];
+            }
+        });
+    </script>
+
+    <div id="mess_area"> 
+        <h3>Không tìm thấy trang bạn yêu cầu!</h3>
+        <b id="error_link"></b>
+        <p>Vui lòng kiểm tra liên kết và thử lại.</p>
+    </div>
+
+</body>
+
+</html>
