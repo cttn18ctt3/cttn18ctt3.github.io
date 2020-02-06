@@ -5,19 +5,19 @@ function doGet(e) {
 
 function getSize(sheet) {
     var output = {};
-  
+
     output["size"] = sheet.getLastRow() - 1;
 
-    
+
     return output;
 
 }
 
 function insertData(e, sheet) {
     var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-  
+
     var nextRow = sheet.getLastRow() + 1;
-    
+
     var row = [];
 
     for (i in headers) {
@@ -43,24 +43,53 @@ function insertData(e, sheet) {
         row.push(e.parameter[headers[i]]);
 
     }
-  
+
     sheet.getRange(nextRow, 1, 1, row.length).setValues([row]);
 
     var output = {};
 
     output.row = nextRow;
-  
-   return output;
+
+    return output;
 
 }
 
 function getTable(sheet) {
 
+    var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+
+    var nextRow = sheet.getLastRow() + 1;
+
+    var size = sheet.getLastRow() - 1;
+
+    var data = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn()).getValues();
+
+    var table = [];
+
+    var j;
+    for (j = 0; i < size; j++) {
+
+        var lineElements = data[i];
+
+        var json = {};
+
+        for (i in headers) {
+
+            if (headers[i] == "username") {
+
+                json["username"] = lineElements["name"];
+                continue;
+            }
+
+            json[headers[i]] = lineElements[headers[i]];
+        }
+
+        table.push(json);
+    }
+
     var output = {};
 
-    table = [];
-
-
+    output.table = table;
     return output;
 
 }
@@ -77,11 +106,11 @@ function handleResponse(e) {
     try {
         var doc = SpreadsheetApp.openById(SCRIPT_PROP.getProperty("key"));
         var sheet = doc.getSheetByName(SHEET_NAME);
-        var headRow = e.parameter.header_row || 1;
-        
+        //var headRow = e.parameter.header_row || 1;
 
 
-        
+
+
 
         var flag = true;
 
@@ -118,10 +147,10 @@ function handleResponse(e) {
             output.result = "error";
             output.error = "Command not found!";
         }
-        
 
 
-        
+
+
     } catch (e) {
 
         output.result = "error";
