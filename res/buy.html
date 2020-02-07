@@ -45,6 +45,8 @@
 
             query_string = parse_query_string(query);
 
+            ShowData(query_string["selectedItem"]);
+
             //
             var submit = $("button[type='submit']");
             submit.click(function () {
@@ -86,77 +88,46 @@
         // this for show data
         var table = new Array();
 
-        function ShowData(table) {
+        function ShowData(selectedItem) {
 
-            dt = document.getElementById("my_file_output");
+            var data = "&cmd=getTableItem&selectedItem=" + selectedItem;
+
+            $.ajax({
+                type: 'GET',
+                url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
+                dataType: 'json',
+                crossDomain: true,
+                data: data,
+                success: function (data) {
+
+                    var cell = data.item;
+                    dt = document.getElementById("my_file_output");
+
+                    if (data["result"] == 'error') {
+                        //alert(JSON.stringify(data));
+                        dt.insertAdjacentHTML('beforeend', '<font color="red">Can\'t located book in bookself</font>');
+                        var form = document.getElementById("form_area");
+
+                        // remove all child from div form
+                        while (form.firstChild) {
+                            form.removeChild(form.firstChild);
+                        }
+                    } else {
+                        book_param = book_param + "&id_book=" + query_string["selectedItem"]
+                            + "&book_name=" + cell["book_name"];
 
 
+                        dt.insertAdjacentHTML('beforeend', '<p>You\'ve selected: ' + cell["book_name"] + ' - ' + cell["author"] + '</p>');
+                        dt.insertAdjacentHTML('beforeend', '<p>Thể lọai: ' + cell["category"] + '</p>');
+                        dt.insertAdjacentHTML('beforeend', '<p>Tóm tắt nội dung: ' + cell["description"] + '</p>');
 
-            var cell = null;
+                        dt.insertAdjacentHTML('beforeend', '</br>' + '<p>Người quyên góp: ' + cell["name"] + ' - ' + cell["donator_id"] + '</p>');
 
-            for (var j = 0; j < table.length; ++j) {
-
-                if (table[j]["id"] == query_string["selectedItem"]) {
-                    cell = table[j];
-                };
-            }
-
-            if (typeof query_string["selectedItem"] === "undefined" || cell == null) {
-                dt.insertAdjacentHTML('beforeend', '<font color="red">Can\'t located book in bookself</font>');
-                form = document.getElementById("form_area");
-
-                // remove all child from div form
-                while (form.firstChild) {
-                    form.removeChild(form.firstChild);
+                    }
                 }
-
-            }
-            else {
-                book_param = book_param + "&id_book=" + query_string["selectedItem"]
-                    + "&book_name=" + cell["book_name"];
-
-                dt.insertAdjacentHTML('beforeend', '<p>You\'ve selected: ' + cell["book_name"] + ' - ' + cell["author"] + '</p>');
-                dt.insertAdjacentHTML('beforeend', '<p>Thể lọai: ' + cell["category"] + '</p>');
-                dt.insertAdjacentHTML('beforeend', '<p>Tóm tắt nội dung: ' + cell["description"] + '</p>');
-
-                dt.insertAdjacentHTML('beforeend', '</br>' + '<p>Người quyên góp: ' + cell["name"] + ' - ' + cell["donator_id"] + '</p>');
-
-            }
-
-
+            });
         }
-
-        /* set up XMLHttpRequest */
-        // url to a public read permission file
-        var url = "https://docs.google.com/spreadsheets/d/1wHg-69ZJaVe5MNp6AVpTTCJikl_6dXwwiPjrxNcwQMY/export?type=xlsx";
-
-        var oReq = new XMLHttpRequest();
-        oReq.open("POST", url, true);
-        oReq.responseType = "arraybuffer";
-
-        oReq.onload = function (e) {
-            var arraybuffer = oReq.response;
-
-            /* convert data to binary string */
-            var data = new Uint8Array(arraybuffer);
-
-            var arr = new Array();
-            for (var i = 0; i != data.length; ++i) {
-                arr[i] = String.fromCharCode(data[i]);
-            }
-
-            var bstr = arr.join("");
-            var cfb = XLSX.read(bstr, { type: 'binary' });
-            var sh = cfb.Sheets[cfb.SheetNames[0]];
-            table = XLSX.utils.sheet_to_json(sh);
-
-            ShowData(table);
-        }
-
-
-        oReq.send();
     </script>
-
 
     <h4>Mượn sách</h4>
     <a href="https://docs.google.com/spreadsheets/d/1wHg-69ZJaVe5MNp6AVpTTCJikl_6dXwwiPjrxNcwQMY/edit?usp=sharing">Link

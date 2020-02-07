@@ -10,15 +10,13 @@
     <style name="page-select-style">
         .center {
             padding: 5pt;
-            
+
             text-align: center;
         }
-        
+
         a.item_page_panel {
             margin-left: 10pt;
         }
-        
-
     </style>
 </head>
 
@@ -57,7 +55,7 @@
             container.insertAdjacentElement('beforeend', panel);
 
             panel.className = "center";
-            
+
             var first_page = 1, last_page = Math.floor(table.length / 10) + 1;
 
             panel.insertAdjacentHTML('beforeend', 'page <b>' + curPage + '</b> of <b>' + last_page + '</b></br>');
@@ -112,16 +110,16 @@
             var start = 0;
             var end = table.length;
 
-            var numberOfPage = Math.floor(table.length / 10) + 1;
+            var numberOfPage = Math.floor(table.length / 12) + 1;
 
             var pageNumber = 1;
 
-            if (table.length > 10) {
+            if (table.length > 12) {
 
                 if (typeof query_string["page"] === "undefined") {
                     // show page 1
                     start = 0;
-                    end = 9;
+                    end = 12;
                 }
                 else {
                     pageNumber = query_string["page"];
@@ -134,9 +132,9 @@
 
                         window.location.href = href;
                     }
-                    start = 10 * (pageNumber - 1);
+                    start = 12 * (pageNumber - 1);
 
-                    end = (table.length < start + 10) ? table.length : start + 10;
+                    end = (table.length < start + 12) ? table.length : start + 12;
                 }
             }
 
@@ -154,35 +152,29 @@
 
         }
 
-        /* set up XMLHttpRequest */
-        // url to a public read permission file
-        var url = "https://docs.google.com/spreadsheets/d/1wHg-69ZJaVe5MNp6AVpTTCJikl_6dXwwiPjrxNcwQMY/export?type=xlsx";
+        var data = "&cmd=getTable";
 
-        var oReq = new XMLHttpRequest();
-        oReq.open("GET", url, true);
-        oReq.responseType = "arraybuffer";
+        $.ajax({
+            type: 'GET',
+            url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
+            dataType: 'json',
+            crossDomain: true,
+            data: data,
+            success: function (data) {
 
-        oReq.onload = function (e) {
-            var arraybuffer = oReq.response;
 
-            /* convert data to binary string */
-            var data = new Uint8Array(arraybuffer);
+                ShowData(data.table);
 
-            var arr = new Array();
-            for (var i = 0; i != data.length; ++i) {
-                arr[i] = String.fromCharCode(data[i]);
+                dt = document.getElementById("mess_area");
+                if (data["result"] == 'error') {
+                    dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can upload data!</font><br>');
+
+                } else {
+                    dt.insertAdjacentHTML('beforeend', '<font color="green">Upload data complete!</font><br>');
+
+                }
             }
-
-            var bstr = arr.join("");
-            var cfb = XLSX.read(bstr, { type: 'binary' });
-            var sh = cfb.Sheets[cfb.SheetNames[0]];
-            table = XLSX.utils.sheet_to_json(sh);
-
-            ShowData(table);
-        }
-
-
-        oReq.send();
+        });
     </script>
 
     <script type="text/javascript">
@@ -201,12 +193,13 @@
     </script>
 
     <h4>Danh sách Book</h4>
-    <a href="https://docs.google.com/spreadsheets/d/1wHg-69ZJaVe5MNp6AVpTTCJikl_6dXwwiPjrxNcwQMY/edit?usp=sharing">Link spreadsheet để đối chiếu data đây</a>
+    <a href="https://docs.google.com/spreadsheets/d/1wHg-69ZJaVe5MNp6AVpTTCJikl_6dXwwiPjrxNcwQMY/edit?usp=sharing">Link
+        spreadsheet để đối chiếu data đây</a>
 
     <p id="debug"> </p>
 
     <p> Vui lòng chọn sách bạn muốn mượn </p>
-    <div id="my_file_output" class = "center">
+    <div id="my_file_output" class="center">
     </div>
 </body>
 

@@ -23,9 +23,9 @@
                 }
                 var data = $('form#test-form').serialize();
 
-                data = data + "&status=Waiting&imglink=";
+                data = data + "&cmd=insertData&status=Đang xử lý&imglink=";
                 $.ajax({
-                    type: 'POST',
+                    type: 'GET',
                     url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
                     dataType: 'json',
                     crossDomain: true,
