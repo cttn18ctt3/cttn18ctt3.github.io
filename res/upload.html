@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <base target="_top">
+</head>
+
+<body>
+    <!-- <script type="text/javascript">
+        var formData = new FormData();
+        // Variable to store your files
+        var files;
+
+        // Add events
+        $('input[type=file]').on('change', prepareUpload);
+
+        // Grab the files and set them to our variable
+        function prepareUpload(event) {
+            files = event.target.files;
+
+        }
+
+        $(document).ready(function () {
+            var submit = $("button[type='submit']");
+            submit.click(function () {
+                dt = document.getElementById("mess_area");
+                while (dt.firstChild) {
+                    dt.removeChild(dt.firstChild);
+                }
+                //var data = $('form#test-form').serialize();
+
+
+                formData.append('file', $('input[type=file]')[0].files[0]);
+
+                //data = "&cmd=insertData&" + data + book_param + "&status=Chờ xác nhận";
+                // $.ajax({
+                //     type: 'GET',
+                //     url: 'https://script.google.com/macros/s/AKfycbzWeZbUzb16OJ54DV1FzXxUTsbMQ2MDKS5575mFcg24AHQ7TTLx/exec',
+                //     dataType: 'json',
+                //     crossDomain: true,
+                //     data: formData,
+                //     success: function (data) {
+
+                //         alert(JSON.stringify(data));
+
+                //         dt = document.getElementById("mess_area");
+                //         if (data["result"] == 'error') {
+                //             dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can upload data!</font><br>');
+
+                //         } else {
+                //             dt.insertAdjacentHTML('beforeend', '<font color="green">Upload data complete!</font><br>');
+
+                //         }
+                //     }
+                // });
+                return false;
+            });
+        });
+    </script> -->
+
+    <script>
+
+        var output;
+
+        var data = {};
+        function ajax_upload(form) {
+            if (form.img.value === "") {
+                alert('select file!');
+                return;
+            }
+
+            var reader = new FileReader();
+            var f = $('input[type=file]')[0].files[0];
+
+
+            data.name = f.name;
+            data.cmd = "uploadImage";
+
+            reader.onloadend = function () {
+                data.data = reader.result;
+
+                // var xhr = new XMLHttpRequest();
+                // xhr.addEventListener("readystatechange", function () {
+                //     if (this.readyState === 4) {
+                //         console.log(this.responseText);
+                //         dt = document.getElementById("mess_area");
+                //         while (dt.firstChild) {
+                //             dt.removeChild(dt.firstChild);
+                //         }
+
+                //         output = this;
+                        
+                //         dt = document.getElementById("mess_area");
+
+                //         dt.insertAdjacentHTML('beforeend', '<p>' + this.responseText + '</p>');
+                //         // if (data["result"] == 'error') {
+                //         //     dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can upload data!</font><br>');
+
+                //         // } else {
+                //         //     dt.insertAdjacentHTML('beforeend', '<font color="green">Upload data complete!</font><br>');
+
+                //         // }
+                //     }
+                // });
+
+                // xhr.open('post', form.action);
+                // //xhr.setRequestHeader('Content-Type', 'application/json');
+                // //xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+                
+                // xhr.send(JSON.stringify(data));
+
+
+                $.ajax({
+                    method: 'post',
+                    url: form.action,
+                    //dataType: 'json',
+
+                    data: JSON.stringify(data),
+                    success: function (data) {
+
+                        alert(JSON.stringify(data));
+
+                        dt = document.getElementById("mess_area");
+                        if (data["result"] == 'error') {
+                            dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can upload data!</font><br>');
+
+                        } else {
+                            alert(data);
+                            dt.insertAdjacentHTML('beforeend', '<font color="green">Upload data complete!</font><br>');
+
+                        }
+                    }
+                });
+            }
+
+            reader.readAsDataURL(f);
+
+        }
+    </script>
+
+    <form action="https://script.google.com/macros/s/AKfycbzWeZbUzb16OJ54DV1FzXxUTsbMQ2MDKS5575mFcg24AHQ7TTLx/exec"
+        method="post" enctype="multipart/form-data" onsubmit="ajax_upload(this); return false;">
+        Select image to upload:
+        <input type="file" id="img" name="img"><br />
+        <input type="submit" value="Upload Image" name="submit">
+
+        <div id="mess_area"></div>
+        <!-- https://drive.google.com/uc?id=1CjZufI1P0VKrF74zNkT_pMwuiJeipIpJ -->
+
+
+    </form>
+
+</body>
+
+</html>
