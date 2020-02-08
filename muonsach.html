@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mượn Sách</title>
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/fixed.css">
+    <link rel="stylesheet" href="style/style-quyengopsach.css">
+    <link rel="stylesheet" href="style/style-muonsach.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="script/1.js"></script>
+</head>
+
+<body data-spy="scroll" data-target="#navbarResponsive">
+
+    <script type="text/javascript">
+        var query = "";
+        var query_string;
+        var book_param = "";
+
+        function parse_query_string(query) {
+            var vars = query.split("&");
+            var query_string = {};
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                var key = decodeURIComponent(pair[0]);
+                var value = decodeURIComponent(pair[1]);
+                // If first entry with this name
+                if (typeof query_string[key] === "undefined") {
+                    query_string[key] = decodeURIComponent(value);
+                    // If second entry with this name
+                } else if (typeof query_string[key] === "string") {
+                    var arr = [query_string[key], decodeURIComponent(value)];
+                    query_string[key] = arr;
+                    // If third or later entry with this name
+                } else {
+                    query_string[key].push(decodeURIComponent(value));
+                }
+            }
+            return query_string;
+        }
+
+        $(document).ready(function () {
+
+            query = window.location.search.substring(1);
+            query_string = parse_query_string(query);
+
+            ShowData(query_string["selectedItem"]);
+
+            var submit = $("button[type='submit']");
+            submit.click(function () {
+                dt = document.getElementById("mess_area");
+                while (dt.firstChild) {
+                    dt.removeChild(dt.firstChild);
+                }
+                var data = $('form#test-form').serialize();
+
+                data = "&cmd=insertData&" + data + book_param + "&status=Chờ xác nhận";
+                $.ajax({
+                    type: 'GET',
+                    url: 'https://script.google.com/macros/s/AKfycbyBXyR1Q5jw0g241-jOOq6to2i6SbAVVzh6DzrVF5aGK-GpXWad/exec',
+                    dataType: 'json',
+                    crossDomain: true,
+                    data: data,
+                    success: function (data) {
+
+                        alert(JSON.stringify(data));
+
+                        dt = document.getElementById("mess_area");
+                        if (data["result"] == 'false') {
+                            dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can upload data!</font><br>');
+
+                        } else {
+                            dt.insertAdjacentHTML('beforeend', '<font color="green">Upload data complete!</font><br>');
+
+                        }
+                    }
+                });
+                return false;
+            });
+
+        });
+    </script>
+
+    <script>
+
+        function ShowData(selectedItem) {
+
+            var data = "&cmd=getTableItem&selectedItem=" + selectedItem;
+
+            $.ajax({
+                type: 'GET',
+                url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
+                dataType: 'json',
+                crossDomain: true,
+                data: data,
+                success: function (data) {
+
+                    var cell = data.item;
+                    dt = document.getElementById("bang");
+
+                    if (data["result"] == 'error') {
+                        //alert(JSON.stringify(data));
+                        dt.insertAdjacentHTML('beforeend', '<font color="red">Can\'t located book in bookself</font>');
+                        var form = document.getElementById("container");
+
+                        // remove all child from div form
+                        while (form.firstChild) {
+                            form.removeChild(form.firstChild);
+                        }
+                    } else {
+
+                        book_param = book_param + "&id_book=" + query_string["selectedItem"]
+                            + "&book_name=" + cell["book_name"];
+
+
+                        // chen ten sach
+                        thongtinsach = document.getElementById("book-info");
+                        thongtinsach.insertAdjacentHTML('afterbegin',
+                            '<h1 id="tieudesach">' + cell["book_name"] + '</h1>');
+
+
+                        //chen the loai
+                        dt.insertAdjacentHTML('beforeend',
+                            '<tr>' +
+                            '<td>Thể Loại</td>' +
+                            '<td>' + cell["category"] + '</td>' +
+                            '</tr>');
+
+                        // chen nguoi quyen gop
+                        dt.insertAdjacentHTML('beforeend',
+                            '<tr>' +
+                            '<td>Người Quyên Góp</td>' +
+                            '<td>' + cell["name"] + '-' + cell["donator_id"] + '</td>' +
+                            '</tr>');
+
+
+                        // chen tom tat noi dung
+                        thongtinsach.insertAdjacentHTML('beforeend', '<p>' + cell["description"] + '</p>');
+
+                    }
+                }
+            });
+        }
+
+    </script>
+
+    <!-- dung de chua thanh nav va nhung thu linh tinh khac cua thanh nav -->
+    <section class="thanhcongcu ">
+        <nav class="navbar navbar-expand-md nav-truoc ">
+            <a class="navbar-brand" href="#"><img src="img/nuno.png"></a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto ">
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link" href="index.html">Trang Chủ</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link" href="khosach.html">Kho Sách</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link" href="noiqui.html">Nội Qui Thư Viện</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link" href="tintuc.html">Tin Tức</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link" href="gioithieu.html">Giới Thiệu</a>
+                    </li>
+
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle icon-user" type="button" data-toggle="dropdown"> <i
+                                class="fa fa-user-circle" aria-hidden="true"></i>
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Thông Tin Tài Khoản</a></li>
+                            <li><a href="#">Lịch Sử Mượn Sách</a></li>
+                            <li><a href="#">Yêu Thích</a></li>
+                            <li><a href="quyengopsach.html">Quyên Góp Sách</a></li>
+                            <li><a href="#">Đăng Xuất</a></li>
+
+                        </ul>
+                    </div>
+
+                </ul>
+            </div>
+        </nav>
+    </section>
+
+    <section class="chenep "></section>
+
+    <!-- khu vuc banner -->
+    <div class="container">
+        <img class="banner-quyengopsach w-100 " src="img/banner-quyengop.png">
+
+        <div>
+            <div id="book-info">
+                <!-- <img src="img/theloai/kienthuc.jpg" alt=""> -->
+                <table id="bang" style="width:100%">
+                    <tr>
+                        <th>Nhà Xuất Bản</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>Kích Thước</td>
+                        <td></td>
+                    </tr>
+                    <!-- <tr>
+                    <td>Tác Giả</td>
+                    <td>Nguyễn Trang</td>
+                </tr> -->
+                    <tr>
+                        <td>Loại Bìa</td>
+                        <td>Bìa Mềm</td>
+                    </tr>
+                    <tr>
+                        <td>Số trang</td>
+                        <td></td>
+                    </tr>
+                </table>
+                <h2>Tóm Tắt Nội Dung</h2>
+
+            </div>
+        </div>
+
+        <form id="test-form" autocomplete="off">
+
+            <fieldset>
+
+                <legend><span class="number">*</span>Điền thông tin cá nhân vô để mượn nè</legend>
+                <label for="name">Họ và Tên</label>
+                <input type="text" id="name" name="name">
+
+                <label for="id-user">MSSV</label>
+                <input type="text" id="id-user" name="id-user">
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email">
+
+                <label for="phone">SĐT</label>
+                <input type="number" id="phone" name="phone">
+
+                <label for="delivery_date">Thời Gian Muốn Nhận</label>
+                <input type="text" id="delivery_date" name="delivery_date">
+
+                <label for="address">Địa Chỉ Nhận</label>
+                <textarea type="text" id="address" name="address"></textarea>
+
+                <label for="note">Ghi Chú</label>
+                <textarea type="text" id="note" name="note"></textarea>
+
+            </fieldset>
+
+            <label>Vui lòng đọc kĩ điều khoản khi cho <B>MƯỢN</B> sách:</label>
+            <input type="checkbox" id="agree" value="agree" name="user_read"><label class="light" for="development">Tôi
+                đã đọc kĩ điều khoản</label><br>
+
+            <div id="mess_area"> </div>
+            <button type="submit" id="submit-form">Mượn Sách Về Nhà Thôi !</button>
+        </form>
+    </div>
+
+    <!-- khu vuc thong tin quyen gop sach -->
+
+    <section class="footer">
+        <div class="connect_with">
+            <span class="head-footer">LIÊN HỆ VỚI CHÚNG TÔI
+            </span>
+            <div class="icon-connect">
+                <a href="#link"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                <a href="#link"><i class="fab fa-facebook-messenger    "></i></a>
+                <a href="#link"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+            </div>
+        </div>
+        <div class="infor-about">
+            <div class="info-1column">
+                <h2 class="head-footer">THÔNG TIN LIÊN QUAN</h2>
+                <a href="#link">ĐKLCH Khoa CNTT</a>
+                <a href="#link">ĐKLCH Khoa Hóa Học</a>
+                <a href="#link">ĐKLCH Khoa CNSH</a>
+                <a href="#link">ĐKLCH Khoa Sinh Học</a>
+                <a href="#link">ĐKLCH Khoa Vật Lí</a>
+                <a href="#link">ĐKLCH Khoa Môi Trường</a>
+                <a href="#link">CLB RoBotics IOT</a>
+                <a href="#link">Đội Sinh Viên Tình Nguyện ITUS</a>
+                <a href="#link">CLB Lí Luận Trẻ</a>
+                <a href="#link">Đội Công Tác Xã Hội</a>
+                <a href="#link">Đội ca múa nhạc kịch hcmus</a>
+            </div>
+            <div class="info-1column">
+                <h2 class="head-footer">THÔNG TIN LIÊN QUAN</h2>
+                <a href="#link">ĐKLCH Khoa CNTT</a>
+                <a href="#link">ĐKLCH Khoa Hóa Học</a>
+                <a href="#link">ĐKLCH Khoa CNSH</a>
+                <a href="#link">ĐKLCH Khoa Sinh Học</a>
+                <a href="#link">ĐKLCH Khoa Vật Lí</a>
+                <a href="#link">ĐKLCH Khoa Môi Trường</a>
+                <a href="#link">CLB RoBotics IOT</a>
+                <a href="#link">Đội Sinh Viên Tình Nguyện ITUS</a>
+                <a href="#link">CLB Lí Luận Trẻ</a>
+                <a href="#link">Đội Công Tác Xã Hội</a>
+                <a href="#link">Đội ca múa nhạc kịch hcmus</a>
+            </div>
+            <div class="info-1column">
+                <h2 class="head-footer">THÔNG TIN LIÊN QUAN</h2>
+                <a href="#link">ĐKLCH Khoa Công Nghệ Thông Tin</a>
+                <a href="#link">ĐKLCH Khoa Hóa Học</a>
+                <a href="#link">ĐKLCH Khoa Công Nghệ Sinh Học</a>
+                <a href="#link">ĐKLCH Khoa Sinh Học</a>
+                <a href="#link">ĐKLCH Khoa Vật Lí</a>
+                <a href="#link">ĐKLCH Khoa Môi Trường</a>
+                <a href="#link">CLB RoBotics IOT</a>
+                <a href="#link">Đội Sinh Viên Tình Nguyện ITUS</a>
+                <a href="#link">CLB Lí Luận Trẻ</a>
+                <a href="#link">Đội Công Tác Xã Hội</a>
+                <a href="#link">Đội ca múa nhạc kịch hcmus</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>

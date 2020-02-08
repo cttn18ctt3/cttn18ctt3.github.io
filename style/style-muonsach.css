@@ -1,0 +1,16 @@
+.modal_content h1{
+    padding: 15px
+}
+.modal_content img{
+    width  : 20%;
+    margin-left: 50%;
+    transform: translateX(-50%);
+
+}
+.modal_content  h2, .modal_content  p {
+    padding: 15px;
+}
+
+.modal_content  table{
+    padding: 15px;
+}

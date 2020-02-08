@@ -2,23 +2,60 @@
 <html>
 
 <head>
-    <title>Index
-    </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width = device-width, initial-scale = 1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href= "style/fixed.css">
+    <link rel="stylesheet" href= "style/style-quyengopsach.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="script/1.js"></script>
 
+ 
+
 </head>
 
 <body data-spy="scroll" data-target="#navbarResponsive">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var submit = $("button[type='submit']");
+            submit.click(function () {
+                dt = document.getElementById("mess_area");
+                while (dt.firstChild) {
+                    dt.removeChild(dt.firstChild);
+                }
+                var data = $('form#test-form').serialize();
+
+                data = data + "&cmd=insertData&status=Đang xử lý&imglink=";
+                $.ajax({
+                    type: 'GET',
+                    url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
+                    dataType: 'json',
+                    crossDomain: true,
+                    data: data,
+                    success: function (data) {
+                        dt = document.getElementById("mess_area");
+                        if (data == 'false') {
+                            dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can upload data!</font><br>');
+
+                        } else {
+                            dt.insertAdjacentHTML('beforeend', '<font color="green">Upload data complete!</font><br>');
+
+                            document.getElementById('name').value = '';
+                            document.getElementById('author').value = '';
+                        }
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
 
     <!-- dung de chua thanh nav va nhung thu linh tinh khac cua thanh nav -->
     <section class="thanhcongcu ">
@@ -32,7 +69,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto ">
                     <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link" href="home.html">Trang Chủ</a>
+                        <a class="nav-link" href="index.html">Trang Chủ</a>
                     </li>
                     <li class="nav-item d-flex align-items-center">
                         <a class="nav-link" href="khosach.html">Kho Sách</a>
@@ -65,104 +102,83 @@
         </nav>
     </section>
 
+    <section class="chenep "></section>
 
-    <div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100 h-100 " src="a.jpg" alt="First slide">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100 h-100" src="a.jpg" alt="Second slide">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100 h-100" src="a.jpg" alt="Third slide">
-            </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
+    <!-- khu vuc banner -->
+    <div class="container">
+        <img class="banner-quyengopsach w-100 " src="img/banner-quyengop.png">
+        <form  id="test-form" autocomplete="off">
+      
+        
+            <fieldset>
+
+                <legend><span class="number">1</span>Thông tin người quyên góp</legend>
+                <label for="name">Họ và Tên:</label>
+                <input type="text" id="name" name="name">
+
+                <label for="donator_id">MSSV</label>
+                <input type="text" id="donator_id" name="donator_id">
+
+               <label for="email">Email</label>
+                <input type="email" id="email" name="email">
+                
+                <label for="phone">SDT</label>
+                <input type="number" id="phone" name="phone">
+
+                <label for="address">Địa Chỉ</label>
+                <textarea type="text" id="address" name="address"></textarea>
+
+              <legend><span class="number">2</span>Thông tin sách</legend>
+              <label for="book_name">Tên Sách:</label>
+              <input type="text" id="book_name" name="book_name">
+              
+             <label for="author">Tác Giả:</label>
+              <input type="text" id="author" name="author">
+
+        
+            </fieldset>
+            
+            <fieldset>
+              <label for="description">Tóm Tắt Nội Dung:</label>
+              <textarea id="description" name="description"></textarea>
+            </fieldset>
+            <fieldset>
+            <label for="job">Chọn Thể Loại:</label>
+            <select id="category" name="category">
+              <optgroup label="Giáo Khoa - Giáo Trình">
+                <option value="toan">Toán</option>
+                <option value="sinh">Sinh Học</option>
+                <option value="cntt">Công Nghệ Thông Tin</option>
+                <option value="vatli"> Vật Lí</option>
+                <option value="chinhtri">Chính Trị</option>
+              </optgroup>
+              <optgroup label="Truyện">
+                <option value="trinhtham">Trinh Thám</option>
+                <option value="ngungon">Ngụ Ngôn</option>
+                <option value="tieuthuyet">Tiểu Thuyết</option>
+              </optgroup>
+              <optgroup label="Ngoại Ngữ">
+                <option value="han">Tiếng Hàn</option>
+                <option value="trung">Tiếng Trung</option>
+                <option value="anh">Tiếng Anh</option>
+              </optgroup>
+
+            </select>
+            
+              <label>Vui lòng đọc kĩ điều khoản khi cho quyên góp sách:</label>
+              <input type="checkbox" id="agree" value="agree" name="user_read"><label class="light" for="development">Tôi đã đọc kĩ điều khoản và hướng dẫn sử dụng</label><br>
+            
+            </fieldset>
+            <div id="mess_area"> </div>
+            <button type="submit" id="submit-form">Quyên Góp cho BCH 18CTT3</button>
+          </form>
     </div>
 
+    <!-- khu vuc thong tin quyen gop sach -->
 
 
-    <!--- tin tuc trong khu vuc home -->
-    <section class="tintuc-home">
-        <div class="jumbotron">
-            <div>
-                <h3 class="heading text-center">TIN TỨC THÔNG BÁO</h3>
-            </div>
 
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <div class="1-tin">
-                        <img src="img/tintucthongbao/tin1.jpg" alt="">
-                        <h3>Sách Nghệ thuật sao chép – Marketing thông minh</h3>
-                        <p>Bạn là một blogger, một người đam mê viết lách, một người cần kĩ năng viết. Nhưng bạn không biết bắt đầu từ đâu. NGHỆ THUẬT SAO CHÉP MARKETING THÔNG MINH Nơi giúp bạn những lúc ý tưởng kiệt quệ. Nơi giúp những bạn kĩ năng viết
-                            yếu nhưng muốn có một bài viết</p>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="1-tin">
-                        <img src="img/tintucthongbao/tin1.jpg" alt="">
-                        <h3>Sách Nghệ thuật sao chép – Marketing thông minh</h3>
-                        <p>Bạn là một blogger, một người đam mê viết lách, một người cần kĩ năng viết. Nhưng bạn không biết bắt đầu từ đâu. NGHỆ THUẬT SAO CHÉP MARKETING THÔNG MINH Nơi giúp bạn những lúc ý tưởng kiệt quệ. Nơi giúp những bạn kĩ năng viết
-                            yếu nhưng muốn có một bài viết</p>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="1-tin">
-                        <img src="img/tintucthongbao/tin1.jpg" alt="">
-                        <h3>Sách Nghệ thuật sao chép – Marketing thông minh</h3>
-                        <p>Bạn là một blogger, một người đam mê viết lách, một người cần kĩ năng viết. Nhưng bạn không biết bắt đầu từ đâu. NGHỆ THUẬT SAO CHÉP MARKETING THÔNG MINH Nơi giúp bạn những lúc ý tưởng kiệt quệ. Nơi giúp những bạn kĩ năng viết
-                            yếu nhưng muốn có một bài viết</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <div class="1-tin">
-                        <img src="img/tintucthongbao/tin1.jpg" alt="">
-                        <h3>Sách Nghệ thuật sao chép – Marketing thông minh</h3>
-                        <p>Bạn là một blogger, một người đam mê viết lách, một người cần kĩ năng viết. Nhưng bạn không biết bắt đầu từ đâu. NGHỆ THUẬT SAO CHÉP MARKETING THÔNG MINH Nơi giúp bạn những lúc ý tưởng kiệt quệ. Nơi giúp những bạn kĩ năng viết
-                            yếu nhưng muốn có một bài viết</p>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="1-tin">
-                        <img src="img/tintucthongbao/tin1.jpg" alt="">
-                        <h3>Sách Nghệ thuật sao chép – Marketing thông minh</h3>
-                        <p>Bạn là một blogger, một người đam mê viết lách, một người cần kĩ năng viết. Nhưng bạn không biết bắt đầu từ đâu. NGHỆ THUẬT SAO CHÉP MARKETING THÔNG MINH Nơi giúp bạn những lúc ý tưởng kiệt quệ. Nơi giúp những bạn kĩ năng viết
-                            yếu nhưng muốn có một bài viết</p>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="1-tin">
-                        <img src="img/tintucthongbao/tin1.jpg" alt="">
-                        <h3>Sách Nghệ thuật sao chép – Marketing thông minh</h3>
-                        <p>Bạn là một blogger, một người đam mê viết lách, một người cần kĩ năng viết. Nhưng bạn không biết bắt đầu từ đâu. NGHỆ THUẬT SAO CHÉP MARKETING THÔNG MINH Nơi giúp bạn những lúc ý tưởng kiệt quệ. Nơi giúp những bạn kĩ năng viết
-                            yếu nhưng muốn có một bài viết</p>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
+    
 
     <section class="footer">
         <div class="connect_with">
@@ -219,6 +235,8 @@
             </div>
         </div>
     </section>
+
+
 
 </body>
 
