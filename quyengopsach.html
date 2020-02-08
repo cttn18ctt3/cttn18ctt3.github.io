@@ -6,9 +6,11 @@
     <meta name="viewport" content="width = device-width, initial-scale = 1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="style/style.css">
+
     <link rel="stylesheet" href= "style/fixed.css">
     <link rel="stylesheet" href= "style/style-quyengopsach.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -16,13 +18,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="script/1.js"></script>
 
- 
-
 </head>
 
 <body data-spy="scroll" data-target="#navbarResponsive">
 
     <script type="text/javascript">
+
+        var json = {};
+
         $(document).ready(function () {
             var submit = $("button[type='submit']");
             submit.click(function () {
@@ -30,28 +33,48 @@
                 while (dt.firstChild) {
                     dt.removeChild(dt.firstChild);
                 }
-                var data = $('form#test-form').serialize();
+              
+                var form = $('form#test-form');
+                var arrayInput = form.serializeArray();
 
-                data = data + "&cmd=insertData&status=Đang xử lý&imglink=";
-                $.ajax({
-                    type: 'GET',
-                    url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
-                    dataType: 'json',
-                    crossDomain: true,
-                    data: data,
-                    success: function (data) {
-                        dt = document.getElementById("mess_area");
-                        if (data == 'false') {
-                            dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can upload data!</font><br>');
+                for (var i in arrayInput) {
+                    json[arrayInput[i].name] = arrayInput[i].value;
+                }
 
-                        } else {
-                            dt.insertAdjacentHTML('beforeend', '<font color="green">Upload data complete!</font><br>');
+                json.cmd = "insertData";
+                json.status = "Đang xử lý";
 
-                            document.getElementById('name').value = '';
-                            document.getElementById('author').value = '';
+                var reader = new FileReader();
+                var f = $('input[type=file]')[0].files[0];
+
+                json.filename = f.name;
+
+                reader.onloadend = function () {
+                    json.rawData = reader.result;
+
+                    $.ajax({
+                        type: 'post',
+                        url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
+
+                        data: JSON.stringify(json),
+
+                        success: function (data) {
+                            dt = document.getElementById("mess_area");
+                            if (data == 'error') {
+
+                                console.log(JSON.stringify(data));
+                                dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can upload data!</font><br>');
+
+                            } else {
+                                console.log(JSON.stringify(data));
+                                dt.insertAdjacentHTML('beforeend', '<font color="green">Upload data complete!</font><br>');
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
+                reader.readAsDataURL(f);
+                
                 return false;
             });
         });
@@ -63,7 +86,9 @@
             <a class="navbar-brand" href="#"><img src="img/nuno.png"></a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-                    <span class="navbar-toggler-icon"></span>
+
+              <span class="navbar-toggler-icon"></span>
+
             </button>
 
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -85,17 +110,19 @@
                     </li>
 
                     <div class="dropdown">
-                        <button class="btn dropdown-toggle icon-user" type="button" data-toggle="dropdown"> <i class="fa fa-user-circle" aria-hidden="true"></i>
-                        <span class="caret"></span></button>
+                      
+                        <button class="btn dropdown-toggle icon-user" type="button" data-toggle="dropdown"> <i
+                                class="fa fa-user-circle" aria-hidden="true"></i>
+                            <span class="caret"></span></button>
                         <ul class="dropdown-menu">
-                          <li><a href="#">Thông Tin Tài Khoản</a></li>
-                          <li><a href="#">Lịch Sử Mượn Sách</a></li>
-                          <li><a href="#">Yêu Thích</a></li>
-                          <li><a href="quyengopsach.html">Quyên Góp Sách</a></li>
-                          <li><a href="#">Đăng Xuất</a></li>
+                            <li><a href="#">Thông Tin Tài Khoản</a></li>
+                            <li><a href="#">Lịch Sử Mượn Sách</a></li>
+                            <li><a href="#">Yêu Thích</a></li>
+                            <li><a href="quyengopsach.html">Quyên Góp Sách</a></li>
+                            <li><a href="#">Đăng Xuất</a></li>
 
                         </ul>
-                      </div>
+                    </div>
 
                 </ul>
             </div>
@@ -107,9 +134,9 @@
     <!-- khu vuc banner -->
     <div class="container">
         <img class="banner-quyengopsach w-100 " src="img/banner-quyengop.png">
-        <form  id="test-form" autocomplete="off">
-      
-        
+
+        <form id="test-form" autocomplete="off">
+
             <fieldset>
 
                 <legend><span class="number">1</span>Thông tin người quyên góp</legend>
@@ -119,75 +146,77 @@
                 <label for="donator_id">MSSV</label>
                 <input type="text" id="donator_id" name="donator_id">
 
-               <label for="email">Email</label>
+                <label for="email">Email</label>
                 <input type="email" id="email" name="email">
-                
+
                 <label for="phone">SDT</label>
                 <input type="number" id="phone" name="phone">
 
                 <label for="address">Địa Chỉ</label>
                 <textarea type="text" id="address" name="address"></textarea>
 
-              <legend><span class="number">2</span>Thông tin sách</legend>
-              <label for="book_name">Tên Sách:</label>
-              <input type="text" id="book_name" name="book_name">
-              
-             <label for="author">Tác Giả:</label>
-              <input type="text" id="author" name="author">
+                <legend><span class="number">2</span>Thông tin sách</legend>
+                <label for="img">Chọn hình bìa sách</label>
+                <input type="file" id="img" name="img">
 
-        
-            </fieldset>
-            
-            <fieldset>
-              <label for="description">Tóm Tắt Nội Dung:</label>
-              <textarea id="description" name="description"></textarea>
-            </fieldset>
-            <fieldset>
-            <label for="job">Chọn Thể Loại:</label>
-            <select id="category" name="category">
-              <optgroup label="Giáo Khoa - Giáo Trình">
-                <option value="toan">Toán</option>
-                <option value="sinh">Sinh Học</option>
-                <option value="cntt">Công Nghệ Thông Tin</option>
-                <option value="vatli"> Vật Lí</option>
-                <option value="chinhtri">Chính Trị</option>
-              </optgroup>
-              <optgroup label="Truyện">
-                <option value="trinhtham">Trinh Thám</option>
-                <option value="ngungon">Ngụ Ngôn</option>
-                <option value="tieuthuyet">Tiểu Thuyết</option>
-              </optgroup>
-              <optgroup label="Ngoại Ngữ">
-                <option value="han">Tiếng Hàn</option>
-                <option value="trung">Tiếng Trung</option>
-                <option value="anh">Tiếng Anh</option>
-              </optgroup>
+                <label for="book_name">Tên Sách</label>
+                <input type="text" id="book_name" name="book_name">
 
-            </select>
-            
-              <label>Vui lòng đọc kĩ điều khoản khi cho quyên góp sách:</label>
-              <input type="checkbox" id="agree" value="agree" name="user_read"><label class="light" for="development">Tôi đã đọc kĩ điều khoản và hướng dẫn sử dụng</label><br>
-            
+                <label for="author">Tác Giả</label>
+                <input type="text" id="author" name="author">
+
+
+            </fieldset>
+
+            <fieldset>
+                <label for="description">Tóm Tắt Nội Dung</label>
+                <textarea id="description" name="description"></textarea>
+            </fieldset>
+            <fieldset>
+                <label for="job">Chọn Thể Loại</label>
+                <select id="category" name="category">
+                    <optgroup label="Giáo Khoa - Giáo Trình">
+                        <option value="toan">Toán</option>
+                        <option value="sinh">Sinh Học</option>
+                        <option value="cntt">Công Nghệ Thông Tin</option>
+                        <option value="vatli"> Vật Lí</option>
+                        <option value="chinhtri">Chính Trị</option>
+                    </optgroup>
+                    <optgroup label="Truyện">
+                        <option value="trinhtham">Trinh Thám</option>
+                        <option value="ngungon">Ngụ Ngôn</option>
+                        <option value="tieuthuyet">Tiểu Thuyết</option>
+                    </optgroup>
+                    <optgroup label="Ngoại Ngữ">
+                        <option value="han">Tiếng Hàn</option>
+                        <option value="trung">Tiếng Trung</option>
+                        <option value="anh">Tiếng Anh</option>
+                    </optgroup>
+
+                </select>
+
+                <label>Vui lòng đọc kĩ điều khoản khi cho quyên góp sách:</label>
+                <input type="checkbox" id="agree" value="agree" name="user_read"><label class="light"
+                    for="development">Tôi đã đọc kĩ điều khoản và hướng dẫn sử dụng</label><br>
+
             </fieldset>
             <div id="mess_area"> </div>
             <button type="submit" id="submit-form">Quyên Góp cho BCH 18CTT3</button>
-          </form>
+        </form>
     </div>
 
     <!-- khu vuc thong tin quyen gop sach -->
-
-
-
-    
 
     <section class="footer">
         <div class="connect_with">
             <span class="head-footer">LIÊN HỆ VỚI CHÚNG TÔI
             </span>
             <div class="icon-connect">
-                <a href="#link"><i class="fab fa-facebook" aria-hidden="true"></i></a> 
-                <a href="#link"><i class="fab fa-facebook-messenger    "></i></a> 
-                <a href="#link"><i class="fab fa-youtube" aria-hidden="true"></i></a> 
+
+                <a href="#link"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                <a href="#link"><i class="fab fa-facebook-messenger    "></i></a>
+                <a href="#link"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+
             </div>
         </div>
         <div class="infor-about">
