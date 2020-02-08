@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Kho Sách
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/style-khosach.css">
+    <link rel="stylesheet" href="style/fixed.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="script/1.js"></script>
+    <script src="script/khosach-script.js"></script>
+
+
+</head>
+
+<body data-spy="scroll" data-target="#navbarResponsive">
+
+    <script>
+        var table = new Array();
+
+        var query = "";
+        var query_string;
+
+        function parse_query_string(query) {
+            var vars = query.split("&");
+            var query_string = {};
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                var key = decodeURIComponent(pair[0]);
+                var value = decodeURIComponent(pair[1]);
+                // If first entry with this name
+                if (typeof query_string[key] === "undefined") {
+                    query_string[key] = decodeURIComponent(value);
+                    // If second entry with this name
+                } else if (typeof query_string[key] === "string") {
+                    var arr = [query_string[key], decodeURIComponent(value)];
+                    query_string[key] = arr;
+                    // If third or later entry with this name
+                } else {
+                    query_string[key].push(decodeURIComponent(value));
+                }
+            }
+            return query_string;
+        }
+
+        function ShowSelectPagePanel(table, container, curPage) {
+            var panel = document.createElement('div');
+            panel.id = 'page_panel';
+            container.insertAdjacentElement('beforeend', panel);
+
+            panel.className = "center";
+
+            var first_page = 1,
+                last_page = Math.floor(table.length / 12) + 1;
+
+            panel.insertAdjacentHTML('beforeend', 'page <b>' + curPage + '</b> of <b>' + last_page + '</b></br>');
+
+            href = window.location.href;
+            href = href.substring(0, href.lastIndexOf('/') + 1) + 'khosach.html?page=';
+
+
+            var first = document.createElement('a');
+            var prev = document.createElement('a');
+            var next = document.createElement('a');
+            var last = document.createElement('a');
+
+
+            if (curPage > first_page) {
+                panel.insertAdjacentElement('beforeend', first);
+                panel.insertAdjacentElement('beforeend', prev);
+            }
+
+            if (curPage < last_page) {
+                panel.insertAdjacentElement('beforeend', next);
+                panel.insertAdjacentElement('beforeend', last);
+            }
+            // redirect
+
+            first.textContent = "first";
+            first.className = "item_page_panel";
+            first.href = href + first_page;
+
+            next.textContent = "next";
+            next.className = "item_page_panel";
+            next.href = href + (curPage - (-1));
+
+            prev.textContent = "prev";
+            prev.className = "item_page_panel";
+            prev.href = href + (curPage - 1);
+
+            last.textContent = "last";
+            last.className = "item_page_panel";
+            last.href = href + last_page;
+
+        }
+
+        function ShowData(table) {
+
+            query = window.location.search.substring(1);
+
+            query_string = parse_query_string(query);
+
+            dt = document.getElementById("my_file_output");
+
+            var start = 0;
+            var end = table.length;
+
+            var numberOfPage = Math.floor(table.length / 12) + 1;
+
+            var pageNumber = 1;
+
+            if (table.length > 12) {
+
+                if (typeof query_string["page"] === "undefined") {
+                    // show page 1
+                    start = 0;
+                    end = 12;
+                }
+                else {
+                    pageNumber = query_string["page"];
+
+                    if (pageNumber <= 0 || pageNumber > numberOfPage) {
+                        // redirect
+                        href = window.location.href;
+
+                        href = href.substring(0, href.lastIndexOf('/') + 1) + 'error_page_not_found.html?href=' + href;
+
+                        window.location.href = href;
+                    }
+                    start = 12 * (pageNumber - 1);
+
+                    end = (table.length < start + 12) ? table.length : start + 12;
+                }
+            }
+
+
+
+
+            for (var j = start; j < end; ++j) {
+
+                ele = table[j];
+
+                console.log(j);
+                if ((j % 12) % 4 == 0) {
+                    dt = document.getElementsByClassName("listsach")[0];
+                    var text =
+                        dt.insertAdjacentHTML('beforeend',
+                            '<div class="row my_file_output">' +
+                            '<div class="motcuonsach col-md-3">' +
+                            '<div class="tren">' +
+                            '<img class="layer1 h-100 w-100" src="img/theloai/kinang.jpg" alt="">' +
+                            '<div class="layer2 h-100 w-100 "></div>' +
+                            '<div class="layer3 h-100 w-100">' +
+                            '<a class="thongtin-btn"><i class="fa fa-info-circle" aria-hidden="true"></i></a> ' +
+                            '<a href="muonsach.html?selectedItem=' + ele["id"] + '"><i class="fas fa-shopping-cart"></i></a> ' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="duoi">' +
+                            '<p class="tieude">' + ele["book_name"] + '</p>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>');
+
+                } else {
+                    dt = document.getElementsByClassName("my_file_output");
+
+                    console.log(dt.length - 1);
+                    dt[dt.length - 1].insertAdjacentHTML('beforeend',
+                        '<div class="motcuonsach col-md-3">' +
+                        '<div class="tren ">' +
+                        '<img class="layer1 h-100 w-100" src="img/theloai/kinang.jpg" alt="">' +
+                        '<div class="layer2 h-100 w-100 "></div>' +
+                        ' <div class="layer3 h-100 w-100">' +
+                        '<a class="thongtin-btn"><i class="fa fa-info-circle" aria-hidden="true"></i></a> ' +
+                        '<a href="muonsach.html?selectedItem=' + ele["id"] + '"><i class="fas fa-shopping-cart"></i></a> ' +
+                        '</div>' +
+                        '</div>' +
+
+                        '<div class="duoi">' +
+                        '<p class="tieude">' + ele["book_name"] + '</p>' +
+                        '</div>' +
+
+                        '</div>');
+
+                }
+                console.log("--");
+
+            }
+            // show page panel
+            dt = document.getElementsByClassName("listsach")[0];
+            ShowSelectPagePanel(table, dt, pageNumber);
+
+
+
+        }
+
+        var data = "&cmd=getTable";
+
+        $.ajax({
+            type: 'GET',
+            url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
+            dataType: 'json',
+            crossDomain: true,
+            data: data,
+            success: function (data) {
+                ShowData(data.table);
+            }
+        });
+    </script>
+
+    <!-- dung de chua thanh nav va nhung thu linh tinh khac cua thanh nav -->
+    <section class="thanhcongcu ">
+        <nav class="navbar navbar-expand-md nav-truoc ">
+            <a class="navbar-brand" href="#"><img src="img/nuno.png"></a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto ">
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link" href="index.html">Trang Chủ</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link" href="khosach.html">Kho Sách</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link" href="noiqui.html">Nội Qui Thư Viện</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link" href="tintuc.html">Tin Tức</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link" href="gioithieu.html">Giới Thiệu</a>
+                    </li>
+
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle icon-user" type="button" data-toggle="dropdown"> <i
+                                class="fa fa-user-circle" aria-hidden="true"></i>
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Thông Tin Tài Khoản</a></li>
+                            <li><a href="#">Lịch Sử Mượn Sách</a></li>
+                            <li><a href="#">Yêu Thích</a></li>
+                            <li><a href="quyengopsach.html">Quyên Góp Sách</a></li>
+                            <li><a href="#">Đăng Xuất</a></li>
+
+                        </ul>
+                    </div>
+
+                </ul>
+            </div>
+        </nav>
+    </section>
+
+    <section class="chenep "></section>
+
+    <!-- khu vuc the loai     -->
+    <section class="theloai">
+        <div class="container">
+            <ul class="list_theloai">
+                <li class="item_theloai">
+                    <img src="img/theloai/truyen.jpg" class="anhtheloai" alt="">
+                    <p class="noidungtheloai">Truyện Tranh</p>
+                </li>
+                <li class="item_theloai">
+                    <img src="img/theloai/giaokhoa.jpg" class="anhtheloai" alt="">
+                    <p class="noidungtheloai">Giáo Khoa</p>
+                </li>
+                <li class="item_theloai">
+                    <img src="img/theloai/kienthuc.jpg" class="anhtheloai" alt="">
+                    <p class="noidungtheloai">Kiến Thức</p>
+                </li>
+                <li class="item_theloai">
+                    <img src="img/theloai/kinang.jpg" class="anhtheloai" alt="">
+                    <p class="noidungtheloai">Kĩ Năng</p>
+                </li>
+                <li class="item_theloai">
+                    <img src="img/theloai/bla1.jpg" class="anhtheloai" alt="">
+                    <p class="noidungtheloai">Sách Luyện Thi</p>
+                </li>
+                <li class="item_theloai">
+                    <img src="img/theloai/bla2.jpg" class="anhtheloai" alt="">
+                    <p class="noidungtheloai">Sách Phô Tô</p>
+                </li>
+                <li class="item_theloai">
+                    <img src="img/theloai/bla3.jpg" class="anhtheloai" alt="">
+                    <p class="noidungtheloai">Tiếng Anh</p>
+                </li>
+                <li class="item_theloai">
+                    <img src="img/theloai/bla4.jpg" class="anhtheloai" alt="">
+                    <p class="noidungtheloai">Chính Trị</p>
+                </li>
+            </ul>
+        </div>
+
+
+
+    </section>
+
+    <!-- khu vực cho các mục và ô tìm kiếm -->
+    <section class="container zone-timkiem-phanloai d-flex">
+        <p>Ưu Tiên :</p>
+        <ul class="list-uutienxem">
+            <button type="button" class="btn btn-primary">Sách Mới</button>
+            <button type="button" class="btn btn-secondary">Số Lượng</button>
+            <button type="button" class="btn btn-success">Thịnh Hành</button>
+            <button type="button" class="btn btn-danger">Giá Tiền</button>
+            <button type="button" class="btn btn-warning">Tiếng Anh</button>
+        </ul>
+        <div class="khuvuctimkiem">
+            <input type="text" placeholder="Key Words">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </div>
+    </section>
+
+    <!-- Khu vuc chua cac dau sach -->
+    <section>
+        <div class="container listsach  ">
+
+        </div>
+    </section>
+
+    <div class="center" style="height: 50px;"></div>
+
+    <!-- modal box, dung de hien thi thong tin sach -->
+    <div class="modal_box ">
+        <div class="modal_content">
+            <h1>Thông tin chi tiết về sách</h1>
+            <img src="img/theloai/kienthuc.jpg" alt="">
+            <table style="width:100%">
+                <tr>
+                    <th>Nhà Xuất Bản</th>
+                    <th>NXB Giáo Dục</th>
+                </tr>
+                <tr>
+                    <td>Kích Thước</td>
+                    <td>13.5 x 20.5 cm</td>
+                </tr>
+                <tr>
+                    <td>Tác Giả</td>
+                    <td>Nguyễn Trang</td>
+                </tr>
+                <tr>
+                    <td>Loại Bìa</td>
+                    <td>Bìa Mềm</td>
+                </tr>
+                <tr>
+                    <td>Số trang</td>
+                    <td>1050</td>
+                </tr>
+            </table>
+            <h2>Giới thiệu sách</h2>
+            <p>Yêu Em Từ Cái Nhìn Đầu Tiên Nhắc đến Yêu em từ cái nhìn đầu tiên có lẽ không cần dùng quá nhiều lời, bởi
+                cùng với Sam Sam đến đây ăn nào, Bên nhau trọn đời, Yêu em từ cái nhìn đầu tiên đã làm nên tên tuổi của
+                Cố Mạn tại Việt Nam. Đi cùng?
+                Hai chữ này kéo Vy Vy trở về hiện tại, lập tức hoàn hồn.Nhìn chiếc xe, lại nhìn Đại Thần, người đẹp Vy
+                Vy lắp bắp: “Em… em…” Tiêu Nại hơi cau mày. Vy Vy trấn tĩnh nói: “… Anh đèo em?”. “Ừ, đường xa thế chẳng
+                lẽ đi bộ?”. Đường đến nhà thi
+                đấu bóng rổ xa thế, đi bộ đương nhiên rất đáng sợ, nhưng… nhưng đáng sợ hơn chính là anh đèo em! Vy Vy
+                băn khoăn. Với danh tiếng nổi như cồn của Tiêu Nại, cộng thêm chút nổi tiếng nho nhỏ của Vy Vy, đèo nhau
+                trên con đường này, chắc chắn
+                sẽ có ngay những lời đồn hay ho cho coi! Tuy rằng họ hình như, hình như, có vẻ như đúng là đang tiến tới
+                những nghi ngờ hay ho đó, nhưng hiện nay, bây giờ, lúc này họ tuyệt đối trắng tinh hơn cả lông cừu. “Như
+                thế này... như thế này...
+                không ổn lắm. Người khác nhìn thấy sẽ hiểu nhầm”. Vy Vy cố từ chối khéo, hai tai bắt đầu đỏ dần. “Hiểu
+                nhầm?”. Chẳng lẽ anh không hiểu? Vy Vy đành nói thẳng: “Hiểu nhầm chúng ta… ôi, là kiểu quan hệ đó…”.
+                Tiêu Nại lặng lẽ nhìn cô, hồi
+                lâu không nói, Vy Vy cảm thấy một nỗi căng thẳng khó hiểu… mình không nói gì sai chứ? Đúng khi Vy Vy cảm
+                thấy mỗi lúc càng căng thẳng hơn, cuối cùng Nại Hà phá vỡ bầu không khí yên lặng: “Thế chúng ta không
+                phải là kiểu quan hệ đó từ khi
+                nào vậy?”.
+            </p>
+        </div>
+    </div>
+    <!-- nen cho modal box -->
+    <div class="momo"></div>
+
+
+
+    <section class="chenep "></section>
+    <section class="chenep "></section>
+
+    <section class="footer">
+        <div class="connect_with">
+            <span class="head-footer">LIÊN HỆ VỚI CHÚNG TÔI
+            </span>
+            <div class="icon-connect">
+                <a href="#link"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                <a href="#link"><i class="fab fa-facebook-messenger    "></i></a>
+                <a href="#link"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+            </div>
+        </div>
+        <div class="infor-about">
+            <div class="info-1column">
+                <h2 class="head-footer">THÔNG TIN LIÊN QUAN</h2>
+                <a href="#link">ĐKLCH Khoa CNTT</a>
+                <a href="#link">ĐKLCH Khoa Hóa Học</a>
+                <a href="#link">ĐKLCH Khoa CNSH</a>
+                <a href="#link">ĐKLCH Khoa Sinh Học</a>
+                <a href="#link">ĐKLCH Khoa Vật Lí</a>
+                <a href="#link">ĐKLCH Khoa Môi Trường</a>
+                <a href="#link">CLB RoBotics IOT</a>
+                <a href="#link">Đội Sinh Viên Tình Nguyện ITUS</a>
+                <a href="#link">CLB Lí Luận Trẻ</a>
+                <a href="#link">Đội Công Tác Xã Hội</a>
+                <a href="#link">Đội ca múa nhạc kịch hcmus</a>
+            </div>
+            <div class="info-1column">
+                <h2 class="head-footer">THÔNG TIN LIÊN QUAN</h2>
+                <a href="#link">ĐKLCH Khoa CNTT</a>
+                <a href="#link">ĐKLCH Khoa Hóa Học</a>
+                <a href="#link">ĐKLCH Khoa CNSH</a>
+                <a href="#link">ĐKLCH Khoa Sinh Học</a>
+                <a href="#link">ĐKLCH Khoa Vật Lí</a>
+                <a href="#link">ĐKLCH Khoa Môi Trường</a>
+                <a href="#link">CLB RoBotics IOT</a>
+                <a href="#link">Đội Sinh Viên Tình Nguyện ITUS</a>
+                <a href="#link">CLB Lí Luận Trẻ</a>
+                <a href="#link">Đội Công Tác Xã Hội</a>
+                <a href="#link">Đội ca múa nhạc kịch hcmus</a>
+            </div>
+            <div class="info-1column">
+                <h2 class="head-footer">THÔNG TIN LIÊN QUAN</h2>
+                <a href="#link">ĐKLCH Khoa Công Nghệ Thông Tin</a>
+                <a href="#link">ĐKLCH Khoa Hóa Học</a>
+                <a href="#link">ĐKLCH Khoa Công Nghệ Sinh Học</a>
+                <a href="#link">ĐKLCH Khoa Sinh Học</a>
+                <a href="#link">ĐKLCH Khoa Vật Lí</a>
+                <a href="#link">ĐKLCH Khoa Môi Trường</a>
+                <a href="#link">CLB RoBotics IOT</a>
+                <a href="#link">Đội Sinh Viên Tình Nguyện ITUS</a>
+                <a href="#link">CLB Lí Luận Trẻ</a>
+                <a href="#link">Đội Công Tác Xã Hội</a>
+                <a href="#link">Đội ca múa nhạc kịch hcmus</a>
+            </div>
+        </div>
+    </section>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+body {
+    font-family: 'Oswald', sans-serif;
+    color: #505962;
+}
+
+.navbar {
+    font-family: 'Nunito', sans-serif;
+
+    text-transform: uppercase;
+    letter-spacing: .1rem;
+    height: 13vh;
+    background-color: orange;
+    transition: 0.5s;
+    z-index: 500;
+    position: fixed;
+    width: 100%;
+}
+
+.navbar-brand img {
+    height: 50%;
+    width: 50%;
+}
+
+.navbar-nav li {
+    padding-right: 0.7rem;
+    align-items: center;
+}
+
+.navbar-nav .nav-item a {
+    color: white;
+    font-weight: 400;
+    font-size: large;
+}
+
+.navbar-nav .nav-item a:hover {
+    font-weight: 600 !important;
+}
+
+.icon-user {
+    background: none;
+    border: none;
+}
+
+.icon-user i.fa:hover, .icon-user span {
+    cursor: pointer;
+    color: black;
+}
+
+.icon-user i, .icon-user span {
+    font-size: 3vw;
+    color: white;
+}
+
+.icon-user i:hover {
+    font-weight: 600;
+}
+
+.dropdown-menu{
+    right: 0px !important;
+    left: auto !important;
+}
+.dropdown-menu a{
+    text-decoration: none;
+    text-transform: capitalize;
+}
+
+.bienhinh {
+    text-transform: uppercase;
+    letter-spacing: .1rem;
+    height: 10vh;
+    background-color: orangered;
+    transition: 0.5s;
+}
+
+.chenep{
+    height: 100px;
+}
+
+
+/* css cho khu vuc tin tuc */
+
+.tintuc-home img {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* css cho khu vuc lien he */
+.icon-connect{
+    display: inline-block;
+}
+
+.footer{
+    padding: 40px;
+    background-color: #c23616;
+    color: white;
+}
+.connect_with{
+    margin-bottom: 40px;
+}
+.head-footer{
+    font-size: 20px;
+}
+.icon-connect a{
+    text-decoration: none;
+    color: white;
+}
+.icon-connect i{
+    font-size: x-large;
+    margin-left: 10px;
+    transition: 0.1s;
+}
+.icon-connect i:hover{
+    transform: scale(1.2);
+}
+.info-1column{
+    display: inline-block;
+    padding: 20px;
+} 
+
+
+.infor-about a{
+    display: block;
+    text-decoration: none;
+    color: white;
+    transition: 0.4s;
+    font-family: sans-serif;
+}
+.infor-about a:hover{   
+    padding-left: 10px;
+}
+
