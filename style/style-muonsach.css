@@ -1,16 +1,61 @@
-.modal_content h1{
+/* css cho modal box */
+.momo {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1999;
+    background: #2c05058a;
+    transition: 0.3s;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    top: 0;
+}
+
+#modal_content {
+    display: inline-block;
+    background-color: #ffffff;
+    border-radius: 5px 5px;
+    width: 100%;
+    transition: 0.3s;
+    opacity: 0;
+    transform: scale(0.6);
+    visibility: hidden;
+    height: 40vh;
+    color: black;   
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.modal_box {
+    width: 50%;
+    height: 40vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 2000;
+    font-size: 20px;
+    visibility: hidden;
+}
+
+/* bat dau dieu chinh cac hieu ung */
+
+.momo.hienra {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* hieu ung 1 */
+
+.modal_box.modal_show #modal_content {
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+}
+#modal_content h1{
     padding: 15px
 }
-.modal_content img{
-    width  : 20%;
-    margin-left: 50%;
-    transform: translateX(-50%);
 
-}
-.modal_content  h2, .modal_content  p {
-    padding: 15px;
-}
-
-.modal_content  table{
+ #modal_content  p {
     padding: 15px;
 }

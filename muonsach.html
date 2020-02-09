@@ -51,6 +51,15 @@
 
         $(document).ready(function () {
 
+            // danh cho viec thong bao
+            // cho modal box
+            $('.momo').click(function(e) {
+                        e.preventDefault();
+                        $('.momo').removeClass('hienra');
+                        $('.modal_box').removeClass('modal_show');
+            });
+
+
             query = window.location.search.substring(1);
             query_string = parse_query_string(query);
 
@@ -75,13 +84,16 @@
 
                         alert(JSON.stringify(data));
 
-                        dt = document.getElementById("mess_area");
+                        thongbao = document.getElementById("modal_content");
                         if (data["result"] == 'false') {
-                            dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can upload data!</font><br>');
-
+                            thongbao.insertAdjacentHTML('beforeend', '<p>Đã có lỗi xảy ra, thông thể mượn sách</p>');
+                            $('.momfo').addClass('hienra');
+                            $('.modal_box').addClass('modal_show');
+                            console.log(12121);
                         } else {
-                            dt.insertAdjacentHTML('beforeend', '<font color="green">Upload data complete!</font><br>');
-
+                            dt.insertAdjacentHTML('beforeend', '<p>Mượn Sách Thành Công</p>');
+                            $('.momo').addClass('hienra');
+                            $('.modal_box').addClass('modal_show');
                         }
                     }
                 });
@@ -109,14 +121,12 @@
                     dt = document.getElementById("bang");
 
                     if (data["result"] == 'error') {
-                        //alert(JSON.stringify(data));
-                        dt.insertAdjacentHTML('beforeend', '<font color="red">Can\'t located book in bookself</font>');
-                        var form = document.getElementById("container");
+                        thongbao = document.getElementById("modal_content");
+                        thongbao.insertAdjacentHTML('beforeend', '<p>Đã có lỗi xảy ra, thông thể mượn sách <hr> ER CODE 202 - Can"t located book in bookself</p>');
+                        $('.momo').addClass('hienra');
+                            $('.modal_box').addClass('modal_show');
+        
 
-                        // remove all child from div form
-                        while (form.firstChild) {
-                            form.removeChild(form.firstChild);
-                        }
                     } else {
 
                         book_param = book_param + "&id_book=" + query_string["selectedItem"]
@@ -153,6 +163,18 @@
         }
 
     </script>
+
+
+    <!-- hien thi cac thong bao  -->
+    <!-- nen cho modal box -->
+    <div class="momo"></div>
+    <!-- modal box, dung de hien thi thong tin sach -->
+    <div class="modal_box ">
+        <div id="modal_content">
+            <h1>Thông Báo</h1>
+                     
+        </div>
+    </div>
 
     <!-- dung de chua thanh nav va nhung thu linh tinh khac cua thanh nav -->
     <section class="thanhcongcu ">
