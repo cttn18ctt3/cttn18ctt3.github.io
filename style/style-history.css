@@ -1,0 +1,31 @@
+*{font-family: 'Roboto Condensed', sans-serif;
+}
+
+tr:first-child{
+    background-color: #5baaea !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: larger;
+}
+tr{
+    height: 50px;
+    transition: 0.1s;
+}
+tr:nth-child(even){
+    background-color: #2edeaf;
+
+}
+tr:nth-child(odd){
+    background-color: #17eaea;
+}
+td{
+  padding-left: 5px  
+}
+tr:hover{
+    cursor: pointer;
+    background-color: yellow;
+}
+tr.dungim{
+    position: fixed;
+}
