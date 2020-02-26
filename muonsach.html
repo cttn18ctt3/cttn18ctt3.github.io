@@ -53,10 +53,10 @@
 
             // danh cho viec thong bao
             // cho modal box
-            $('.momo').click(function(e) {
-                        e.preventDefault();
-                        $('.momo').removeClass('hienra');
-                        $('.modal_box').removeClass('modal_show');
+            $('.momo').click(function (e) {
+                e.preventDefault();
+                $('.momo').removeClass('hienra');
+                $('.modal_box').removeClass('modal_show');
             });
 
 
@@ -124,8 +124,8 @@
                         thongbao = document.getElementById("modal_content");
                         thongbao.insertAdjacentHTML('beforeend', '<p>Đã có lỗi xảy ra, thông thể mượn sách <hr> ER CODE 202 - Can"t located book in bookself</p>');
                         $('.momo').addClass('hienra');
-                            $('.modal_box').addClass('modal_show');
-        
+                        $('.modal_box').addClass('modal_show');
+
 
                     } else {
 
@@ -172,7 +172,7 @@
     <div class="modal_box ">
         <div id="modal_content">
             <h1>Thông Báo</h1>
-                     
+
         </div>
     </div>
 
@@ -199,21 +199,14 @@
                     <li class="nav-item d-flex align-items-center">
                         <a class="nav-link" href="tintuc.html">Tin Tức</a>
                     </li>
-                    <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link" href="gioithieu.html">Giới Thiệu</a>
-                    </li>
 
                     <div class="dropdown">
                         <button class="btn dropdown-toggle icon-user" type="button" data-toggle="dropdown"> <i
                                 class="fa fa-user-circle" aria-hidden="true"></i>
                             <span class="caret"></span></button>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Thông Tin Tài Khoản</a></li>
-                            <li><a href="#">Lịch Sử Mượn Sách</a></li>
-                            <li><a href="#">Yêu Thích</a></li>
+                            <li><a href="history.html">Lịch Sử Mượn Sách</a></li>
                             <li><a href="quyengopsach.html">Quyên Góp Sách</a></li>
-                            <li><a href="#">Đăng Xuất</a></li>
-
                         </ul>
                     </div>
 
