@@ -197,14 +197,14 @@
 
         }
 
-        var data = "&cmd=getTable";
+        var json = {};
+        json.cmd = "getTable";
 
         $.ajax({
-            type: 'GET',
+            type: 'post',
             url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
-            dataType: 'json',
             crossDomain: true,
-            data: data,
+            data: JSON.stringify(json),
             success: function (data) {
                 ShowData(data.table);
             }

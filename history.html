@@ -2,14 +2,37 @@
 
 <head>
     <title>Lịch Sử Mượn Sách</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script lang="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.12.4/xlsx.core.min.js"></script>
     <link rel="stylesheet" href="style/style-history.css">
-
-
+    <link rel="stylesheet" href="style/style-nav.css">
 </head>
 
 <body>
+
+    <header>
+
+        <input type="checkbox" name="" id="chkMenu">
+        <nav>
+            <img alt="logo" src="https://drive.google.com/uc?id=15lKj0UNzKXjW8RiYnEKWxgq5bVtTFK16"></img>
+
+            <ul>
+                <li><a href="./index.html">Trang Chủ</a></li>
+                <li><a href="./khosach.html">Kho Sách</a></li>
+                <li><a href="./quyengopsach.html">Quyên Góp</a></li>
+                <li><a href="./history.html">Thống Kê</a></li>
+                <li><a href="#">Tin Tức</a></li>
+                <li><a href="#">Nội Quy</a></li>
+            </ul>
+
+        </nav>
+        <div class="menu">
+            <label for="chkMenu" id="l1"></label>
+        </div>
+    </header>
+
     </div id="result">
 
     <script type="text/javascript">
@@ -90,7 +113,6 @@
                 data: data,
                 success: function (data) {
 
-
                     ShowData(data.table);
 
                     dt = document.getElementById("mess_area");
@@ -103,19 +125,11 @@
                     }
                 }
             });
-        
-        
-        
-        
         });
     </script>
 
-
-
-
-
     <h1>Trạng Thái Mượn sách</h1>
-   
+
     <div id="my_file_output">
     </div>
     </br>
