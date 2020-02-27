@@ -13,12 +13,11 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="script/1.js"></script>
     <script src="script/khosach-script.js"></script>
-
 
 </head>
 
@@ -148,8 +147,6 @@
             for (var j = start; j < end; ++j) {
 
                 ele = table[j];
-
-                console.log(j);
                 if ((j % 12) % 4 == 0) {
                     dt = document.getElementsByClassName("listsach")[0];
                     var text =
@@ -172,8 +169,6 @@
 
                 } else {
                     dt = document.getElementsByClassName("my_file_output");
-
-                    console.log(dt.length - 1);
                     dt[dt.length - 1].insertAdjacentHTML('beforeend',
                         '<div class="motcuonsach col-md-3">' +
                         '<div class="tren ">' +
@@ -192,7 +187,6 @@
                         '</div>');
 
                 }
-                console.log("--");
 
             }
             // show page panel
@@ -203,14 +197,14 @@
 
         }
 
-        var data = "&cmd=getTable";
+        var json = {};
+        json.cmd = "getTable";
 
         $.ajax({
-            type: 'GET',
+            type: 'post',
             url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
-            dataType: 'json',
             crossDomain: true,
-            data: data,
+            data: JSON.stringify(json),
             success: function (data) {
                 ShowData(data.table);
             }
@@ -240,21 +234,14 @@
                     <li class="nav-item d-flex align-items-center">
                         <a class="nav-link" href="tintuc.html">Tin Tức</a>
                     </li>
-                    <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link" href="gioithieu.html">Giới Thiệu</a>
-                    </li>
 
                     <div class="dropdown">
                         <button class="btn dropdown-toggle icon-user" type="button" data-toggle="dropdown"> <i
                                 class="fa fa-user-circle" aria-hidden="true"></i>
                             <span class="caret"></span></button>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Thông Tin Tài Khoản</a></li>
-                            <li><a href="#">Lịch Sử Mượn Sách</a></li>
-                            <li><a href="#">Yêu Thích</a></li>
+                            <li><a href="history.html">Lịch Sử Mượn Sách</a></li>
                             <li><a href="quyengopsach.html">Quyên Góp Sách</a></li>
-                            <li><a href="#">Đăng Xuất</a></li>
-
                         </ul>
                     </div>
 
@@ -298,7 +285,7 @@
                     <p class="noidungtheloai">Tiếng Anh</p>
                 </li>
                 <li class="item_theloai">
-                    <img src="img/theloai/bla4.jpg" class="anhtheloai" alt="">
+                    <img src="img/theloai/bla3.jpg" class="anhtheloai" alt="">
                     <p class="noidungtheloai">Chính Trị</p>
                 </li>
             </ul>

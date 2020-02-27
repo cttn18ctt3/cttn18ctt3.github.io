@@ -1,0 +1,141 @@
+<html>
+
+<head>
+    <title>Lịch Sử Mượn Sách</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="style/style-history.css">
+    <link rel="stylesheet" href="style/style-nav.css">
+</head>
+
+<body>
+
+    <header>
+
+        <input type="checkbox" name="" id="chkMenu">
+        <nav>
+            <img alt="logo" src="https://drive.google.com/uc?id=15lKj0UNzKXjW8RiYnEKWxgq5bVtTFK16"></img>
+
+            <ul>
+                <li><a href="./index.html">Trang Chủ</a></li>
+                <li><a href="./khosach.html">Kho Sách</a></li>
+                <li><a href="./quyengopsach.html">Quyên Góp</a></li>
+                <li><a href="./history.html">Thống Kê</a></li>
+                <li><a href="#">Tin Tức</a></li>
+                <li><a href="#">Nội Quy</a></li>
+            </ul>
+
+        </nav>
+        <div class="menu">
+            <label for="chkMenu" id="l1"></label>
+        </div>
+    </header>
+
+    </div id="result">
+
+    <script type="text/javascript">
+
+        var query = "";
+        var query_string;
+        var book_param = "";
+
+        function parse_query_string(query) {
+            var vars = query.split("&");
+            var query_string = {};
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                var key = decodeURIComponent(pair[0]);
+                var value = decodeURIComponent(pair[1]);
+                // If first entry with this name
+                if (typeof query_string[key] === "undefined") {
+                    query_string[key] = decodeURIComponent(value);
+                    // If second entry with this name
+                } else if (typeof query_string[key] === "string") {
+                    var arr = [query_string[key], decodeURIComponent(value)];
+                    query_string[key] = arr;
+                    // If third or later entry with this name
+                } else {
+                    query_string[key].push(decodeURIComponent(value));
+                }
+            }
+            return query_string;
+        }
+
+
+        $(document).ready(function () {
+
+
+
+            query = window.location.search.substring(1);
+
+            query_string = parse_query_string(query);
+
+            //
+            function ShowData(tableData) {
+                var table = document.getElementById("my_table");
+
+                var row = table.insertRow(0);
+
+                var count = 0;
+
+                Object.keys(tableData[0]).forEach(function (key) {
+
+                    var c = row.insertCell(count);
+
+                    c.innerHTML = key;
+                    count -= (-1);
+                });
+
+                for (row in tableData) { // row is index
+                    var r = table.insertRow(row - (-1));
+
+                    var count = 0;
+
+                    Object.keys(tableData[row]).forEach(function (key) {
+
+                        var c = r.insertCell(count);
+
+                        c.innerHTML = tableData[row][key];
+                        count -= (-1);
+                    });
+                }
+            }
+
+            var data = "&cmd=getTable";
+
+            $.ajax({
+                type: 'GET',
+                url: 'https://script.google.com/macros/s/AKfycbyBXyR1Q5jw0g241-jOOq6to2i6SbAVVzh6DzrVF5aGK-GpXWad/exec',
+                dataType: 'json',
+                crossDomain: true,
+                data: data,
+                success: function (data) {
+
+                    ShowData(data.table);
+
+                    dt = document.getElementById("mess_area");
+                    if (data["result"] == 'false') {
+                        dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can upload data!</font><br>');
+
+                    } else {
+                        dt.insertAdjacentHTML('beforeend', '<font color="green">Upload data complete!</font><br>');
+
+                    }
+                }
+            });
+        });
+    </script>
+
+    <h1>Trạng Thái Mượn sách</h1>
+
+    <div id="my_file_output">
+    </div>
+    </br>
+    <div id="mess_area"> </div>
+    <table id="my_table"></table>
+
+</body>
+
+</html>
