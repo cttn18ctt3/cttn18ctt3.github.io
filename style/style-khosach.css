@@ -130,7 +130,7 @@ div.khuvuctimkiem i:hover{
 
 
 /* css cho modal box */
-.momo {
+#momo {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -143,7 +143,7 @@ div.khuvuctimkiem i:hover{
     top: 0;
 }
 
-.modal_content {
+#modal_content {
     display: inline-block;
     background-color: #ffffff;
     border-radius: 5px 5px;
@@ -151,15 +151,15 @@ div.khuvuctimkiem i:hover{
     transition: 0.3s;
     opacity: 0;
     transform: scale(0.6);
-    overflow: scroll;
+    overflow-y : scroll;
     visibility: hidden;
-    height: 100vh;
+    height: 90vh;
+    margin-top: 5vh;
     color: black;
-    font-family: font-family: 'Roboto Condensed', sans-serif;
     font-family: 'Roboto Condensed', sans-serif;
 }
 
-.modal_box {
+#modal_box {
     width: 50%;
     height: 100vh;
     position: fixed;
@@ -173,31 +173,40 @@ div.khuvuctimkiem i:hover{
 
 /* bat dau dieu chinh cac hieu ung */
 
-.momo.hienra {
+#momo.hienra {
     opacity: 1;
     visibility: visible;
 }
 
 /* hieu ung 1 */
 
-.modal_box.modal_show .modal_content {
+#modal_box.modal_show #modal_content {
     opacity: 1;
     transform: scale(1);
     visibility: visible;
 }
-.modal_content h1{
+#modal_content h1{
     padding: 15px
 }
-.modal_content img{
+#modal_content img{
     width  : 40%;
     margin-left: 50%;
     transform: translateX(-50%);
 
 }
-.modal_content  h2, .modal_content  p {
+#modal_content  h2, #modal_content  p {
     padding: 15px;
 }
 
-.modal_content  table{
+#modal_content  table{
     padding: 15px;
+}
+
+/* css cho phan thu tu trang  */
+#page_panel {
+    text-align: center ;
+}
+#page_panel a{
+    margin-top:10px ;
+    margin-left: 10px;
 }

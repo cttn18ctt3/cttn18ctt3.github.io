@@ -62,7 +62,7 @@
             var first_page = 1,
                 last_page = Math.floor(table.length / 12) + 1;
 
-            panel.insertAdjacentHTML('beforeend', 'page <b>' + curPage + '</b> of <b>' + last_page + '</b></br>');
+            panel.insertAdjacentHTML('beforeend', 'Page <b>' + curPage + '</b> of <b>' + last_page + '</b></br>');
 
             href = window.location.href;
             href = href.substring(0, href.lastIndexOf('/') + 1) + 'khosach.html?page=';
@@ -85,20 +85,20 @@
             }
             // redirect
 
-            first.textContent = "first";
-            first.className = "item_page_panel";
+            first.textContent = "First";
+            first.className = "item_page_panel btn btn-secondary";
             first.href = href + first_page;
 
-            next.textContent = "next";
-            next.className = "item_page_panel";
+            next.textContent = "Next";
+            next.className = "item_page_panel btn btn-secondary";
             next.href = href + (curPage - (-1));
 
-            prev.textContent = "prev";
-            prev.className = "item_page_panel";
+            prev.textContent = "Prev";
+            prev.className = "item_page_panel btn btn-secondary";
             prev.href = href + (curPage - 1);
 
-            last.textContent = "last";
-            last.className = "item_page_panel";
+            last.textContent = "Last";
+            last.className = "item_page_panel btn btn-secondary";
             last.href = href + last_page;
 
         }
@@ -142,14 +142,10 @@
                 }
             }
 
-
-
-
             for (var j = start; j < end; ++j) {
 
                 ele = table[j];
 
-                console.log(j);
                 if ((j % 12) % 4 == 0) {
                     dt = document.getElementsByClassName("listsach")[0];
                     var text =
@@ -157,10 +153,10 @@
                             '<div class="row my_file_output">' +
                             '<div class="motcuonsach col-md-3">' +
                             '<div class="tren">' +
-                            '<img class="layer1 h-100 w-100" src="img/theloai/kinang.jpg" alt="">' +
+                            '<img class="layer1 h-100 w-100" src="'+ ele["imglink"] +'" alt="">' +
                             '<div class="layer2 h-100 w-100 "></div>' +
                             '<div class="layer3 h-100 w-100">' +
-                            '<a class="thongtin-btn"><i class="fa fa-info-circle" aria-hidden="true"></i></a> ' +
+                        '<a class="thongtin-btn" onclick= "nutthongtin('+  ele["id"]   +')"><i class="fa fa-info-circle" aria-hidden="true"></i></a> ' +
                             '<a href="muonsach.html?selectedItem=' + ele["id"] + '"><i class="fas fa-shopping-cart"></i></a> ' +
                             '</div>' +
                             '</div>' +
@@ -173,14 +169,13 @@
                 } else {
                     dt = document.getElementsByClassName("my_file_output");
 
-                    console.log(dt.length - 1);
                     dt[dt.length - 1].insertAdjacentHTML('beforeend',
                         '<div class="motcuonsach col-md-3">' +
                         '<div class="tren ">' +
-                        '<img class="layer1 h-100 w-100" src="img/theloai/kinang.jpg" alt="">' +
+                        '<img class="layer1 h-100 w-100" src="'+ ele["imglink"] +'" alt="">' +
                         '<div class="layer2 h-100 w-100 "></div>' +
                         ' <div class="layer3 h-100 w-100">' +
-                        '<a class="thongtin-btn"><i class="fa fa-info-circle" aria-hidden="true"></i></a> ' +
+                        '<a class="thongtin-btn" onclick= "nutthongtin('+  ele["id"]   +')"><i class="fa fa-info-circle" aria-hidden="true"></i></a> ' +
                         '<a href="muonsach.html?selectedItem=' + ele["id"] + '"><i class="fas fa-shopping-cart"></i></a> ' +
                         '</div>' +
                         '</div>' +
@@ -192,14 +187,11 @@
                         '</div>');
 
                 }
-                console.log("--");
 
             }
             // show page panel
             dt = document.getElementsByClassName("listsach")[0];
             ShowSelectPagePanel(table, dt, pageNumber);
-
-
 
         }
 
@@ -298,7 +290,7 @@
                     <p class="noidungtheloai">Tiếng Anh</p>
                 </li>
                 <li class="item_theloai">
-                    <img src="img/theloai/bla4.jpg" class="anhtheloai" alt="">
+                    <img src="img/theloai/bla1.jpg" class="anhtheloai" alt="">
                     <p class="noidungtheloai">Chính Trị</p>
                 </li>
             </ul>
@@ -334,57 +326,39 @@
     <div class="center" style="height: 50px;"></div>
 
     <!-- modal box, dung de hien thi thong tin sach -->
-    <div class="modal_box ">
-        <div class="modal_content">
+    <div id="modal_box">
+        <div id="modal_content">
             <h1>Thông tin chi tiết về sách</h1>
-            <img src="img/theloai/kienthuc.jpg" alt="">
+            <img src="" id="link_sach">
             <table style="width:100%">
                 <tr>
-                    <th>Nhà Xuất Bản</th>
-                    <th>NXB Giáo Dục</th>
+                    <td>Nhà Xuất Bản</td>
+                    <td id="nxb_sach"></td>
                 </tr>
                 <tr>
                     <td>Kích Thước</td>
-                    <td>13.5 x 20.5 cm</td>
+                    <td id="kichthuoc_sach"></td>
                 </tr>
                 <tr>
                     <td>Tác Giả</td>
-                    <td>Nguyễn Trang</td>
+                    <td id="tacgia_sach"></td>
                 </tr>
                 <tr>
                     <td>Loại Bìa</td>
-                    <td>Bìa Mềm</td>
+                    <td id="loaibia_sach"></td>
                 </tr>
                 <tr>
                     <td>Số trang</td>
-                    <td>1050</td>
+                    <td id="sotrang_sach"></td>
                 </tr>
             </table>
             <h2>Giới thiệu sách</h2>
-            <p>Yêu Em Từ Cái Nhìn Đầu Tiên Nhắc đến Yêu em từ cái nhìn đầu tiên có lẽ không cần dùng quá nhiều lời, bởi
-                cùng với Sam Sam đến đây ăn nào, Bên nhau trọn đời, Yêu em từ cái nhìn đầu tiên đã làm nên tên tuổi của
-                Cố Mạn tại Việt Nam. Đi cùng?
-                Hai chữ này kéo Vy Vy trở về hiện tại, lập tức hoàn hồn.Nhìn chiếc xe, lại nhìn Đại Thần, người đẹp Vy
-                Vy lắp bắp: “Em… em…” Tiêu Nại hơi cau mày. Vy Vy trấn tĩnh nói: “… Anh đèo em?”. “Ừ, đường xa thế chẳng
-                lẽ đi bộ?”. Đường đến nhà thi
-                đấu bóng rổ xa thế, đi bộ đương nhiên rất đáng sợ, nhưng… nhưng đáng sợ hơn chính là anh đèo em! Vy Vy
-                băn khoăn. Với danh tiếng nổi như cồn của Tiêu Nại, cộng thêm chút nổi tiếng nho nhỏ của Vy Vy, đèo nhau
-                trên con đường này, chắc chắn
-                sẽ có ngay những lời đồn hay ho cho coi! Tuy rằng họ hình như, hình như, có vẻ như đúng là đang tiến tới
-                những nghi ngờ hay ho đó, nhưng hiện nay, bây giờ, lúc này họ tuyệt đối trắng tinh hơn cả lông cừu. “Như
-                thế này... như thế này...
-                không ổn lắm. Người khác nhìn thấy sẽ hiểu nhầm”. Vy Vy cố từ chối khéo, hai tai bắt đầu đỏ dần. “Hiểu
-                nhầm?”. Chẳng lẽ anh không hiểu? Vy Vy đành nói thẳng: “Hiểu nhầm chúng ta… ôi, là kiểu quan hệ đó…”.
-                Tiêu Nại lặng lẽ nhìn cô, hồi
-                lâu không nói, Vy Vy cảm thấy một nỗi căng thẳng khó hiểu… mình không nói gì sai chứ? Đúng khi Vy Vy cảm
-                thấy mỗi lúc càng căng thẳng hơn, cuối cùng Nại Hà phá vỡ bầu không khí yên lặng: “Thế chúng ta không
-                phải là kiểu quan hệ đó từ khi
-                nào vậy?”.
+            <p id="mota_sach">
             </p>
         </div>
     </div>
     <!-- nen cho modal box -->
-    <div class="momo"></div>
+    <div id="momo" onclick="nutmomo()"></div>
 
 
 
@@ -446,6 +420,58 @@
             </div>
         </div>
     </section>
+
+
+    <script>
+        function nutmomo() {
+            var momo = document.getElementById("momo");
+            momo.classList.remove("hienra");
+            var modalbox = document.getElementById("modal_box");
+            modalbox.classList.remove("modal_show");
+        }
+
+        function nutthongtin(idsach) {
+                        
+            var data = "&cmd=getTableItem&selectedItem=" + idsach;
+
+            $.ajax({
+                type: 'GET',
+                url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
+                dataType: 'json',
+                crossDomain: true,
+                data: data,
+                success: function (data) {
+
+                    var cell = data.item;
+
+                    if (data["result"] == 'error') {
+                        var form = document.getElementById("container");
+
+                        while (form.firstChild) {
+                            form.removeChild(form.firstChild);
+                        }
+                    } else {
+                        document.getElementById("link_sach").src= cell["imglink"];   
+                        document.getElementById("nxb_sach").innerHTML= "Nhà Xuất Bản Giáo Dục";   
+                        document.getElementById("kichthuoc_sach").innerHTML= "15cm 20cm 30cm";   
+                        document.getElementById("tacgia_sach").innerHTML= cell["author"];   
+                        document.getElementById("loaibia_sach").innerHTML= "Mềm mịn như da mông em bé";  
+                        document.getElementById("sotrang_sach").innerHTML= "Trên 10 trang";  
+                        document.getElementById("mota_sach").innerHTML= cell["description"];  
+                    }
+                }
+            });
+
+            
+            var momo = document.getElementById("momo");
+            momo.classList.add("hienra");
+            var modalbox = document.getElementById("modal_box");
+            modalbox.classList.add("modal_show");
+        }
+
+    </script>
+
+
 
 
 
