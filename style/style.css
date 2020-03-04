@@ -12,7 +12,7 @@ body {
     height: 13vh;
     background-color: orange;
     transition: 0.5s;
-    z-index: 3000;
+    z-index: 500;
     position: fixed;
     width: 100%;
 }
