@@ -16,6 +16,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TimelineMax.min.js"></script>
+
     <script src="script/1.js"></script>
     <script src="script/khosach-script.js"></script>
 
@@ -23,6 +27,7 @@
 
 <body data-spy="scroll" data-target="#navbarResponsive">
 
+    
     <script>
         var table = new Array();
 
@@ -211,8 +216,8 @@
         <nav class="navbar navbar-expand-md nav-truoc ">
             <a class="navbar-brand" href="#"><img src="img/nuno.png"></a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-                <span class="navbar-toggler-icon"></span>
+            <button class="nutbam navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                <i class="iconnutbam fas fa-chevron-circle-down"></i>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -235,8 +240,8 @@
                                 class="fa fa-user-circle" aria-hidden="true"></i>
                             <span class="caret"></span></button>
                         <ul class="dropdown-menu">
-                            <li><a href="history.html">Lịch Sử Mượn Sách</a></li>
-                            <li><a href="quyengopsach.html">Quyên Góp Sách</a></li>
+                            <li><a href="history.html">Lịch Sử Mượn</a></li>
+                            <li><a href="quyengopsach.html">Quyên Góp</a></li>
                         </ul>
                     </div>
 
@@ -247,65 +252,11 @@
 
     <section class="chenep "></section>
 
-    <!-- khu vuc the loai     -->
-    <section class="theloai">
-        <div class="container">
-            <ul class="list_theloai">
-                <li class="item_theloai">
-                    <img src="img/theloai/truyen.jpg" class="anhtheloai" alt="">
-                    <p class="noidungtheloai">Truyện Tranh</p>
-                </li>
-                <li class="item_theloai">
-                    <img src="img/theloai/giaokhoa.jpg" class="anhtheloai" alt="">
-                    <p class="noidungtheloai">Giáo Khoa</p>
-                </li>
-                <li class="item_theloai">
-                    <img src="img/theloai/kienthuc.jpg" class="anhtheloai" alt="">
-                    <p class="noidungtheloai">Kiến Thức</p>
-                </li>
-                <li class="item_theloai">
-                    <img src="img/theloai/kinang.jpg" class="anhtheloai" alt="">
-                    <p class="noidungtheloai">Kĩ Năng</p>
-                </li>
-                <li class="item_theloai">
-                    <img src="img/theloai/bla1.jpg" class="anhtheloai" alt="">
-                    <p class="noidungtheloai">Sách Luyện Thi</p>
-                </li>
-                <li class="item_theloai">
-                    <img src="img/theloai/bla2.jpg" class="anhtheloai" alt="">
-                    <p class="noidungtheloai">Sách Phô Tô</p>
-                </li>
-                <li class="item_theloai">
-                    <img src="img/theloai/bla3.jpg" class="anhtheloai" alt="">
-                    <p class="noidungtheloai">Tiếng Anh</p>
-                </li>
-                <li class="item_theloai">
-                    <img src="img/theloai/bla1.jpg" class="anhtheloai" alt="">
-                    <p class="noidungtheloai">Chính Trị</p>
-                </li>
-            </ul>
-        </div>
+    <div class="loading">
+        <div class="khoiload"></div>        
+    </div>
 
-
-
-    </section>
-
-    <!-- khu vực cho các mục và ô tìm kiếm -->
-    <section class="container zone-timkiem-phanloai d-flex">
-        <p>Ưu Tiên :</p>
-        <ul class="list-uutienxem">
-            <button type="button" class="btn btn-primary">Sách Mới</button>
-            <button type="button" class="btn btn-secondary">Số Lượng</button>
-            <button type="button" class="btn btn-success">Thịnh Hành</button>
-            <button type="button" class="btn btn-danger">Giá Tiền</button>
-            <button type="button" class="btn btn-warning">Tiếng Anh</button>
-        </ul>
-        <div class="khuvuctimkiem">
-            <input type="text" placeholder="Key Words">
-            <i class="fa fa-search" aria-hidden="true"></i>
-        </div>
-    </section>
-
+   
     <!-- Khu vuc chua cac dau sach -->
     <section>
         <div class="container listsach  ">

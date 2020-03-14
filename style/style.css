@@ -6,10 +6,8 @@ body {
 
 .navbar {
     font-family: 'Nunito', sans-serif;
-
     text-transform: uppercase;
     letter-spacing: .1rem;
-    height: 13vh;
     background-color: orange;
     transition: 0.5s;
     z-index: 1998;
@@ -28,13 +26,15 @@ body {
 }
 
 .navbar-nav .nav-item a {
-    color: white;
-    font-weight: 400;
+    color: black;
+    font-weight: 500;
     font-size: large;
+    transition: 0.4s;
 }
 
 .navbar-nav .nav-item a:hover {
     font-weight: 600 !important;
+    color: white;
 }
 
 .icon-user {
@@ -59,16 +59,30 @@ body {
 .dropdown-menu{
     right: 0px !important;
     left: auto !important;
+    background-color:orange ;
+    border: none;
+    
 }
 .dropdown-menu a{
     text-decoration: none;
     text-transform: capitalize;
+    color: black;
+    transition: 0.4s;
+}
+.dropdown-menu li{
+    font-size: large;
+    margin-left: 5px;
+    margin-top: 25px;
+}
+.dropdown-menu a:hover{
+    color: rgb(251, 251, 251);
 }
 
 .bienhinh {
     text-transform: uppercase;
     letter-spacing: .1rem;
-    height: 10vh;
+    /* height: 10vh; */
+    height: fit-content !important;
     background-color: orangered;
     transition: 0.5s;
 }
@@ -77,6 +91,13 @@ body {
     height: 100px;
 }
 
+.nutbam{
+    border: none;
+}
+
+.iconnutbam :hover {
+    transform: rotate(180);
+}
 
 /* css cho khu vuc tin tuc */
 

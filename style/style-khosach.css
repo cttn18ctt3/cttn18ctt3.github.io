@@ -1,73 +1,3 @@
-
-
-ul.list_theloai {
-    list-style-type: none;
-    display: flex;
-    overflow: hidden;
-    /* height: 252px; */
-}
-
-p.noidungtheloai {
-    text-align: center;
-    font-size: 3vh;
-}
-
-li.item_theloai {
-    display: inline-block;
-    /* border: 1px solid black; */
-    margin-right: 14px;
-    transition: 0.5s;
-}
-
-li.item_theloai:hover {
-    box-shadow: 5px 5px 5px #9a9a9a;
-    cursor: pointer;
-    transform: scale(1.2);
-}
-
-.zone-timkiem-phanloai p {
-    display: inline-block;
-    width: 100px;
-    font-size: 18px;
-    line-height: 36px;
-}
-
-ul.list-uutienxem {
-    list-style: none;
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-}
-
-ul.list-uutienxem li {
-    /* margin-right: 16px; */
-    display: inline-block;
-}
-
-div.khuvuctimkiem {
-    display: flex;
-}
-
-div.khuvuctimkiem input {
-    width: 20vw;
-    height: 35px;
-    display: block;
-}
-
-div.khuvuctimkiem i {
-    font-size: 4vh;
-    margin-left: 7px;
-    margin-top: 5px;
-    text-align: center;
-    cursor: pointer;
-    transition: 0.2s;
-}
-div.khuvuctimkiem i:hover{
-    transform: rotate(20deg);
-    color: orangered;
-}
-
-
 /* css cho moi cuon sach */
 
 .motcuonsach {
@@ -202,10 +132,42 @@ div.khuvuctimkiem i:hover{
     padding: 15px;
 }
 
+#modal_content  table i{
+    animation: fa-spin 2s linear infinite;
+}
+
+
+
 #page_panel{
     text-align: center;
 }
 #page_panel a{
     margin-top: 10px;
     margin-left: 10px;
+}
+
+/* phan loading  */
+
+
+.khoiload {
+    position: fixed;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    background: #f39c12;
+    border-radius: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+}
+
+.loading {
+    width: 100%;
+    height: 100%;
+    background: #2c3e50;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
 }
