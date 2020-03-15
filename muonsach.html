@@ -8,23 +8,28 @@
      
     <!-- phan jquery, btr, font easome, twimax -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TimelineMax.min.js"></script>
     
     <!-- phan script tu viet  -->
     <script src="script/allpage.js"></script>
     <script src="script/khosach-script.js"></script>
-
+    
      <!-- phan css  -->
     <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="style/style-muonsach.css.css">
+    <link rel="stylesheet" href="style/style-muonsach.css">
+    <link rel="stylesheet" href="style/style-quyengopsach.css">
+
 </head>
 
 <body data-spy="scroll" data-target="#navbarResponsive">
 
+    
     <script type="text/javascript">
         var query = "";
         var query_string;
@@ -85,14 +90,11 @@
                     data: data,
                     success: function (data) {
 
-                        alert(JSON.stringify(data));
-
                         thongbao = document.getElementById("modal_content");
                         if (data["result"] == 'false') {
                             thongbao.insertAdjacentHTML('beforeend', '<p>Đã có lỗi xảy ra, thông thể mượn sách</p>');
                             $('.momfo').addClass('hienra');
                             $('.modal_box').addClass('modal_show');
-                            console.log(12121);
                         } else {
                             dt.insertAdjacentHTML('beforeend', '<p>Mượn Sách Thành Công</p>');
                             $('.momo').addClass('hienra');
@@ -166,6 +168,11 @@
         }
 
     </script>
+    
+    <!-- tao hieu ung loading -->
+    <div class="loading">
+        <div class="khoiload"></div>        
+    </div>
 
     <!-- dau trang de chua nav  -->
     <div id="dautrang">
@@ -178,7 +185,9 @@
     <div class="modal_box ">
         <div id="modal_content">
             <h1>Thông Báo</h1>
-
+            <p>Bạn đã mượn sách thành công</p>
+            <a class="btn btn-primary" href="khosach.html" style="    width: 50%;
+            margin-left: 25%;">Quay Về Kho Sách</a>
         </div>
     </div>
 
@@ -196,23 +205,23 @@
                 <table id="bang" style="width:100%">
                     <tr>
                         <th>Nhà Xuất Bản</th>
-                        <th></th>
+                        <th><i class="fas fa-circle-notch fa-spin"></i></th>
                     </tr>
                     <tr>
                         <td>Kích Thước</td>
-                        <td></td>
+                        <td><i class="fas fa-circle-notch fa-spin"></i></td>
                     </tr>
-                    <!-- <tr>
-                    <td>Tác Giả</td>
-                    <td>Nguyễn Trang</td>
-                </tr> -->
+                    <tr>
+                        <td>Tác Giả</td>
+                        <td><i class="fas fa-circle-notch fa-spin"></i></td>
+                    </tr>
                     <tr>
                         <td>Loại Bìa</td>
-                        <td>Bìa Mềm</td>
+                        <td><i class="fas fa-circle-notch fa-spin"></i></td>
                     </tr>
                     <tr>
                         <td>Số trang</td>
-                        <td></td>
+                        <td><i class="fas fa-circle-notch fa-spin"></i></td>
                     </tr>
                 </table>
                 <h2>Tóm Tắt Nội Dung</h2>
