@@ -29,7 +29,11 @@
 
 <body data-spy="scroll" data-target="#navbarResponsive">
 
-    
+    <!-- tao hieu ung loading -->
+    <div class="loading">
+        <div class="khoiload"></div>        
+    </div>
+
     <script type="text/javascript">
         var query = "";
         var query_string;
@@ -134,6 +138,10 @@
 
                     } else {
 
+                        // chinh lai anh 
+                        anhsach = document.getElementById("anhsach");
+                        anhsach.innerHTML =  '<img src="' + cell["imglink"] + '" alt="" >'
+
                         book_param = book_param + "&id_book=" + query_string["selectedItem"]
                             + "&book_name=" + cell["book_name"];
 
@@ -169,10 +177,21 @@
 
     </script>
     
-    <!-- tao hieu ung loading -->
-    <div class="loading">
-        <div class="khoiload"></div>        
-    </div>
+    <script>
+        function dongydieukhoan() {
+            console.log(444);
+            // Get the checkbox
+            var checkBox = document.getElementById("agree");
+
+            // If the checkbox is checked, display the button
+            var button = document.getElementById("submit-form");
+            if (checkBox.checked == true){
+                button.disabled = false;
+            } else {
+                button.disabled = true;
+            }
+        }
+    </script>
 
     <!-- dau trang de chua nav  -->
     <div id="dautrang">
@@ -197,11 +216,14 @@
 
     <!-- khu vuc banner -->
     <div class="container">
+
         <img class="banner-quyengopsach w-100 " src="img/banner-quyengop.png">
 
         <div>
             <div id="book-info">
-                <!-- <img src="img/theloai/kienthuc.jpg" alt=""> -->
+
+                <div id="anhsach" style="text-align: center;"><i class="fas fa-circle-notch fa-spin"></i></div>
+              
                 <table id="bang" style="width:100%">
                     <tr>
                         <th>Nhà Xuất Bản</th>
@@ -258,13 +280,15 @@
             </fieldset>
 
             <label>Vui lòng đọc kĩ điều khoản khi cho <B>MƯỢN</B> sách:</label>
-            <input type="checkbox" id="agree" value="agree" name="user_read"><label class="light" for="development">Tôi
-                đã đọc kĩ điều khoản</label><br>
+            <input type="checkbox" id="agree" value="agree" name="user_read" onclick="dongydieukhoan()"><label class="light" >Tôi
+                đã đọc kĩ và hoàn toàn đồng ý với <a href="noiqui.html">điều khoản</a></label><br>
 
             <div id="mess_area"> </div>
-            <button type="submit" id="submit-form">Mượn Sách Về Nhà Thôi !</button>
+            <button type="submit" id="submit-form" disabled="true">Mượn Sách Về Nhà Thôi !</button>
         </form>
     </div>
+
+
 
     <!-- khu vuc thong tin quyen gop sach -->
 

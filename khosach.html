@@ -19,7 +19,6 @@
     
     <!-- phan script tu viet  -->
     <script src="script/allpage.js"></script>
-    <script src="script/khosach-script.js"></script>    
 
      <!-- phan css  -->
     <link rel="stylesheet" href="style/style.css">
@@ -29,9 +28,27 @@
 </head>
 
 <body data-spy="scroll" data-target="#navbarResponsive">
-
+        
+        <!-- tao hieu ung loading -->
+        <div class="loading">
+            <div class="khoiload"></div>        
+        </div>
     
     <script>
+
+
+        hieuungdau = new TimelineMax({ onComplete: loading}); 
+        hieuungdau
+        .from($('.loading'),0.7,{opacity:0})
+        .from($('.khoiload'),0.7,{scale:2,opacity:0})
+
+        // bat dau cho tien hanh lap lai vo tan, cung luc do thi cac cau lenh o phan khung ben duoi chay
+        function loading(){
+            hieuungload = new TimelineMax({repeat: -1}); 
+            hieuungload.to($('.khoiload'),1,{scale:0.3,ease:Power4.easeOut})
+            .to($('.khoiload'),1,{scale:1,ease: Elastic.easeOut.config(1, 0.3)})
+        }
+
         var table = new Array();
 
         var query = "";
@@ -110,7 +127,15 @@
 
         }
 
-        function ShowData(table) {
+        function dunghieuung( ){
+            timeline = new TimelineMax({});
+            timeline.to($('.khoiload'),0.8,{scale:7,opacity:0,ease:Power4.easeOut})
+            timeline.to($('.loading'),0.8,{x:-2200,ease:Power1.easeOut})
+            timeline = new TimelineMax({paused: true});
+        
+        }
+
+        function ShowData(table, callback) {
 
             query = window.location.search.substring(1);
 
@@ -197,7 +222,7 @@
             // show page panel
             dt = document.getElementsByClassName("listsach")[0];
             ShowSelectPagePanel(table, dt, pageNumber);
-
+            callback();
         }
 
         var json = {};
@@ -209,7 +234,7 @@
             crossDomain: true,
             data: JSON.stringify(json),
             success: function (data) {
-                ShowData(data.table);
+                ShowData(data.table, dunghieuung);
             }
         });
     </script>
@@ -220,10 +245,7 @@
 
     <section class="chenep "></section>
 
-    <!-- tao hieu ung loading -->
-    <div class="loading">
-        <div class="khoiload"></div>        
-    </div>
+
 
        <!-- Khu vuc chua cac dau sach -->
     <section>
