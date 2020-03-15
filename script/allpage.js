@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+    // them thanh nav vo dau trang
+    $("#dautrang").load("nav.html"); 
+
     var body = document.documentElement.scrollTop;
     $(window).scroll(function() {
 
@@ -11,4 +14,8 @@ $(document).ready(function() {
             $('.nav-truoc').removeClass('bienhinh');
         }
     });
+
+    // them phan footer vo cuoi trang
+    $("#cuoitrang").load("footer.html"); 
+
 });

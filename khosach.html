@@ -6,22 +6,25 @@
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width = device-width, initial-scale = 1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    
+     <!-- phan jquery, btr, font easome, twimax -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TimelineMax.min.js"></script>
+    
+    <!-- phan script tu viet  -->
+    <script src="script/allpage.js"></script>
+    <script src="script/khosach-script.js"></script>
+
+     <!-- phan css  -->
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/style-khosach.css">
-    <link rel="stylesheet" href="style/fixed.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TimelineMax.min.js"></script>
-
-    <script src="script/1.js"></script>
-    <script src="script/khosach-script.js"></script>
 
 </head>
 
@@ -154,7 +157,7 @@
                     var text =
                         dt.insertAdjacentHTML('beforeend',
                             '<div class="row my_file_output">' +
-                            '<div class="motcuonsach col-md-3">' +
+                            '<div class="motcuonsach col-sm-3">' +
                             '<div class="tren">' +
                             '<img class="layer1 h-100 w-100" src="'+ ele["imglink"] +'" alt="">' +
                             '<div class="layer2 h-100 w-100 "></div>' +
@@ -172,7 +175,7 @@
                 } else {
                     dt = document.getElementsByClassName("my_file_output");
                     dt[dt.length - 1].insertAdjacentHTML('beforeend',
-                        '<div class="motcuonsach col-md-3">' +
+                        '<div class="motcuonsach col-sm-3">' +
                         '<div class="tren ">' +
                         '<img class="layer1 h-100 w-100" src="'+ ele["imglink"] +'" alt="">' +
                         '<div class="layer2 h-100 w-100 "></div>' +
@@ -211,56 +214,20 @@
         });
     </script>
 
-    <!-- dung de chua thanh nav va nhung thu linh tinh khac cua thanh nav -->
-    <section class="thanhcongcu ">
-        <nav class="navbar navbar-expand-md nav-truoc ">
-            <a class="navbar-brand" href="#"><img src="img/nuno.png"></a>
-
-            <button class="nutbam navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-                <i class="iconnutbam fas fa-chevron-circle-down"></i>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto ">
-                    <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link" href="index.html">Trang Chủ</a>
-                    </li>
-                    <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link" href="khosach.html">Kho Sách</a>
-                    </li>
-                    <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link" href="noiqui.html">Nội Qui Thư Viện</a>
-                    </li>
-                    <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link" href="tintuc.html">Tin Tức</a>
-                    </li>
-
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle icon-user" type="button" data-toggle="dropdown"> <i
-                                class="fa fa-user-circle" aria-hidden="true"></i>
-                            <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="history.html">Lịch Sử Mượn</a></li>
-                            <li><a href="quyengopsach.html">Quyên Góp</a></li>
-                        </ul>
-                    </div>
-
-                </ul>
-            </div>
-        </nav>
-    </section>
+    <!-- dau trang de chua nav  -->
+    <div id="dautrang">
+    </div>
 
     <section class="chenep "></section>
 
+    <!-- tao hieu ung loading -->
     <div class="loading">
         <div class="khoiload"></div>        
     </div>
 
-   
-    <!-- Khu vuc chua cac dau sach -->
+       <!-- Khu vuc chua cac dau sach -->
     <section>
         <div class="container listsach  ">
-
         </div>
     </section>
 
@@ -306,62 +273,8 @@
     <section class="chenep "></section>
     <section class="chenep "></section>
 
-    <section class="footer">
-        <div class="connect_with">
-            <span class="head-footer">LIÊN HỆ VỚI CHÚNG TÔI
-            </span>
-            <div class="icon-connect">
-                <a href="#link"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-                <a href="#link"><i class="fab fa-facebook-messenger    "></i></a>
-                <a href="#link"><i class="fab fa-youtube" aria-hidden="true"></i></a>
-            </div>
-        </div>
-        <div class="infor-about">
-            <div class="info-1column">
-                <h2 class="head-footer">THÔNG TIN LIÊN QUAN</h2>
-                <a href="#link">ĐKLCH Khoa CNTT</a>
-                <a href="#link">ĐKLCH Khoa Hóa Học</a>
-                <a href="#link">ĐKLCH Khoa CNSH</a>
-                <a href="#link">ĐKLCH Khoa Sinh Học</a>
-                <a href="#link">ĐKLCH Khoa Vật Lí</a>
-                <a href="#link">ĐKLCH Khoa Môi Trường</a>
-                <a href="#link">CLB RoBotics IOT</a>
-                <a href="#link">Đội Sinh Viên Tình Nguyện ITUS</a>
-                <a href="#link">CLB Lí Luận Trẻ</a>
-                <a href="#link">Đội Công Tác Xã Hội</a>
-                <a href="#link">Đội ca múa nhạc kịch hcmus</a>
-            </div>
-            <div class="info-1column">
-                <h2 class="head-footer">THÔNG TIN LIÊN QUAN</h2>
-                <a href="#link">ĐKLCH Khoa CNTT</a>
-                <a href="#link">ĐKLCH Khoa Hóa Học</a>
-                <a href="#link">ĐKLCH Khoa CNSH</a>
-                <a href="#link">ĐKLCH Khoa Sinh Học</a>
-                <a href="#link">ĐKLCH Khoa Vật Lí</a>
-                <a href="#link">ĐKLCH Khoa Môi Trường</a>
-                <a href="#link">CLB RoBotics IOT</a>
-                <a href="#link">Đội Sinh Viên Tình Nguyện ITUS</a>
-                <a href="#link">CLB Lí Luận Trẻ</a>
-                <a href="#link">Đội Công Tác Xã Hội</a>
-                <a href="#link">Đội ca múa nhạc kịch hcmus</a>
-            </div>
-            <div class="info-1column">
-                <h2 class="head-footer">THÔNG TIN LIÊN QUAN</h2>
-                <a href="#link">ĐKLCH Khoa Công Nghệ Thông Tin</a>
-                <a href="#link">ĐKLCH Khoa Hóa Học</a>
-                <a href="#link">ĐKLCH Khoa Công Nghệ Sinh Học</a>
-                <a href="#link">ĐKLCH Khoa Sinh Học</a>
-                <a href="#link">ĐKLCH Khoa Vật Lí</a>
-                <a href="#link">ĐKLCH Khoa Môi Trường</a>
-                <a href="#link">CLB RoBotics IOT</a>
-                <a href="#link">Đội Sinh Viên Tình Nguyện ITUS</a>
-                <a href="#link">CLB Lí Luận Trẻ</a>
-                <a href="#link">Đội Công Tác Xã Hội</a>
-                <a href="#link">Đội ca múa nhạc kịch hcmus</a>
-            </div>
-        </div>
-    </section>
-
+    <!-- cuoi trang de chua footer -->
+    <div id="cuoitrang"></div>
 
     <script>
         function nutmomo() {
@@ -411,9 +324,6 @@
         }
 
     </script>
-
-
-
 
 
 </body>

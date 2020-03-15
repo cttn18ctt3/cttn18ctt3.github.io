@@ -5,59 +5,31 @@
     <title>Công Trình Thanh Niên 18CTT3</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width = device-width, initial-scale = 1  ">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="style/fixed.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
+    
+    <!-- phan jquery, btr, font easome -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="script/1.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
+
+    <!-- phan script tu viet  -->
+    <script src="script/allpage.js"></script>
+
+    <!-- phan css  -->
+    <link rel="stylesheet" href="style/style.css">
+    
 </head>
 
 <body data-spy="scroll" data-target="#navbarResponsive">
 
-    <!-- dung de chua thanh nav va nhung thu linh tinh khac cua thanh nav -->
-    <section class="thanhcongcu ">
-        <nav class="navbar navbar-expand-md nav-truoc ">
-            <a class="navbar-brand" href="#"><img src="img/nuno.png"></a>
+    <!-- dau trang de chua nav  -->
+    <div id="dautrang">
+    </div>
 
-            <button class="nutbam navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-                <i class="iconnutbam fas fa-chevron-circle-down"></i>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto ">
-                    <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link" href="index.html">Trang Chủ</a>
-                    </li>
-                    <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link" href="khosach.html">Kho Sách</a>
-                    </li>
-                    <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link" href="noiqui.html">Nội Qui Thư Viện</a>
-                    </li>
-                    <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link" href="tintuc.html">Tin Tức</a>
-                    </li>
-
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle icon-user" type="button" data-toggle="dropdown"> <i
-                                class="fa fa-user-circle" aria-hidden="true"></i>
-                            <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="history.html">Lịch Sử Mượn</a></li>
-                            <li><a href="quyengopsach.html">Quyên Góp</a></li>
-                        </ul>
-                    </div>
-
-                </ul>
-            </div>
-        </nav>
-    </section>
+    <section style="height: 60px;"></section>
 
     <div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
         <ol class="carousel-indicators">
@@ -67,13 +39,13 @@
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="d-block w-100 h-100 " src="a.jpg" alt="First slide">
+                <img class="d-block w-100 h-100 " src="img/banner-quyengop.png" alt="First slide">
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100 h-100" src="a.jpg" alt="Second slide">
+                <img class="d-block w-100 h-100" src="img/computers.png" alt="Second slide">
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100 h-100" src="a.jpg" alt="Third slide">
+                <img class="d-block w-100 h-100" src="img/banner-quyengop.png" alt="Third slide">
             </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -169,61 +141,10 @@
         </div>
     </section>
 
-    <section class="footer">
-        <div class="connect_with">
-            <span class="head-footer">LIÊN HỆ VỚI CHÚNG TÔI
-            </span>
-            <div class="icon-connect">
-                <a href="#link"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-                <a href="#link"><i class="fab fa-facebook-messenger    "></i></a>
-                <a href="#link"><i class="fab fa-youtube" aria-hidden="true"></i></a>
-            </div>
-        </div>
-        <div class="infor-about">
-            <div class="info-1column">
-                <h2 class="head-footer">THÔNG TIN LIÊN QUAN</h2>
-                <a href="#link">ĐKLCH Khoa CNTT</a>
-                <a href="#link">ĐKLCH Khoa Hóa Học</a>
-                <a href="#link">ĐKLCH Khoa CNSH</a>
-                <a href="#link">ĐKLCH Khoa Sinh Học</a>
-                <a href="#link">ĐKLCH Khoa Vật Lí</a>
-                <a href="#link">ĐKLCH Khoa Môi Trường</a>
-                <a href="#link">CLB RoBotics IOT</a>
-                <a href="#link">Đội Sinh Viên Tình Nguyện ITUS</a>
-                <a href="#link">CLB Lí Luận Trẻ</a>
-                <a href="#link">Đội Công Tác Xã Hội</a>
-                <a href="#link">Đội ca múa nhạc kịch hcmus</a>
-            </div>
-            <div class="info-1column">
-                <h2 class="head-footer">THÔNG TIN LIÊN QUAN</h2>
-                <a href="#link">ĐKLCH Khoa CNTT</a>
-                <a href="#link">ĐKLCH Khoa Hóa Học</a>
-                <a href="#link">ĐKLCH Khoa CNSH</a>
-                <a href="#link">ĐKLCH Khoa Sinh Học</a>
-                <a href="#link">ĐKLCH Khoa Vật Lí</a>
-                <a href="#link">ĐKLCH Khoa Môi Trường</a>
-                <a href="#link">CLB RoBotics IOT</a>
-                <a href="#link">Đội Sinh Viên Tình Nguyện ITUS</a>
-                <a href="#link">CLB Lí Luận Trẻ</a>
-                <a href="#link">Đội Công Tác Xã Hội</a>
-                <a href="#link">Đội ca múa nhạc kịch hcmus</a>
-            </div>
-            <div class="info-1column">
-                <h2 class="head-footer">THÔNG TIN LIÊN QUAN</h2>
-                <a href="#link">ĐKLCH Khoa Công Nghệ Thông Tin</a>
-                <a href="#link">ĐKLCH Khoa Hóa Học</a>
-                <a href="#link">ĐKLCH Khoa Công Nghệ Sinh Học</a>
-                <a href="#link">ĐKLCH Khoa Sinh Học</a>
-                <a href="#link">ĐKLCH Khoa Vật Lí</a>
-                <a href="#link">ĐKLCH Khoa Môi Trường</a>
-                <a href="#link">CLB RoBotics IOT</a>
-                <a href="#link">Đội Sinh Viên Tình Nguyện ITUS</a>
-                <a href="#link">CLB Lí Luận Trẻ</a>
-                <a href="#link">Đội Công Tác Xã Hội</a>
-                <a href="#link">Đội ca múa nhạc kịch hcmus</a>
-            </div>
-        </div>
-    </section>
+
+    <!-- cuoi trang de chua footer -->
+    <div id="cuoitrang"></div>
+
 
 </body>
 

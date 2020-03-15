@@ -1,7 +1,7 @@
 /* css cho moi cuon sach */
 
 .motcuonsach {
-    height: 400px;
+    height: 23vw;
 }
 
 .tren {
@@ -51,12 +51,34 @@
     padding: 10px;
     border-radius: 3px;
 }
+.motcuonsach .tieude{
+    font-size: 1.8vw;
+    text-align: center;
+    padding: 3px;
+}
 
 .tren:hover .layer2,
 .tren:hover .layer3 {
     opacity: 1;
     transform: scale(1);
 }
+
+@media screen and (max-width: 767px) {
+    /* start of medium tablet styles */
+
+}
+    
+@media screen and (max-width: 580px) {
+    /* start of phone styles */
+    .motcuonsach {
+        height: 400px;
+    }
+
+    .motcuonsach .tieude{
+        font-size: 30px;
+    }
+}
+
 
 
 /* css cho modal box */
