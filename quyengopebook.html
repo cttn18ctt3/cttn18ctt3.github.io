@@ -4,22 +4,22 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width = device-width, initial-scale = 1">
-    <title>Quyên góp sách</title>
+    <title>Đóng góp eBook</title>
 
     <!-- phan jquery, btr, font easome, twimax -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-        
-        <!-- phan script tu viet  -->
-        <script src="script/allpage.js"></script>
-    
-        <!-- phan css  -->
-        <link rel="stylesheet" href="style/style.css">
-        <link rel="stylesheet" href="style/style-quyengopsach.css">
+
+    <!-- phan script tu viet  -->
+    <script src="script/allpage.js"></script>
+
+    <!-- phan css  -->
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/style-quyengopsach.css">
 
 </head>
 
@@ -49,50 +49,70 @@
                 }
 
                 json.cmd = "insertData";
-                json.type = "book";
+                json.type = "ebook";
 
                 // notices for user:
                 // carefully to change this var, that's is the only way to recover authenticated transactions  
                 json.replyEmail = true;
 
                 var reader = new FileReader();
-                var fread = $('input[type=file]')[0];
-                
-                if (fread.files.length == 0) {
+                var freadimg = $('input[type=file]')[0];
+
+                if (freadimg.files.length == 0) {
                     // no selected file
                     alert("Please select image!");
                     return false;
                 }
-                var f = fread.files[0];
+
+                var f = freadimg.files[0];
                 if (f.size > 10240000) {
                     // file size > 10MB
                     alert("Image size must less than 10MB!");
                     return false;
                 }
-
                 json.filename = f.name;
+                json.filesize = f.size;
 
                 reader.onloadend = function () {
                     json.rawData = reader.result;
 
-                    $.ajax({
-                        type: 'post',
-                        url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
+                    var reader2 = new FileReader();
+                    var freadpdf = $('input[type=file]')[1];
 
-                        data: JSON.stringify(json),
+                    if (freadpdf.files.length == 0) {
+                        // no selected file
+                        alert("Please select ebook!");
+                        return false;
+                    }
 
-                        success: function (data) {
-                            dt = document.getElementById("mess_area");
-                            if (data == 'error') {
-                                console.log(JSON.stringify(data));
-                                dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can\'t send data!</font><br>');
+                    var f2 = freadpdf.files[0];
 
-                            } else {
-                                console.log(JSON.stringify(data));
-                                dt.insertAdjacentHTML('beforeend', '<font color="green">Data sent!</font><br>');
+                    json.filename2 = f2.name;
+                    json.filesize2 = f2.size;
+
+                    reader2.onloadend = function () {
+                        json.rawData2 = reader2.result;
+
+                        $.ajax({
+                            type: 'post',
+                            url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
+
+                            data: JSON.stringify(json),
+
+                            success: function (data) {
+                                dt = document.getElementById("mess_area");
+                                if (data == 'error') {
+                                    console.log(JSON.stringify(data));
+                                    dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can\'t send data!</font><br>');
+
+                                } else {
+                                    console.log(JSON.stringify(data));
+                                    dt.insertAdjacentHTML('beforeend', '<font color="green">Data sent!</font><br>');
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
+                    reader2.readAsDataURL(f2);
                 }
 
                 reader.readAsDataURL(f);
@@ -131,19 +151,24 @@
                 <label for="address">Địa Chỉ</label>
                 <textarea type="text" id="address" name="address"></textarea>
 
-                <legend><span class="number">2</span>Thông tin sách</legend>
-                <label for="img">Chọn Hình Bìa Sách (jpg, png tối đa 10MB)</label>
+                <legend><span class="number">2</span>Thông tin eBook</legend>
+                <label for="img">Chọn Hình Bìa eBook (jpg, png tối đa 10MB)</label>
                 <input type="file" id="img" name="img">
                 </br>
                 </br>
+                <label for="pdf">Upload eBook (pdf)</label>
+                <input type="file" id="pdf" name="pdf">
+                </br>
+                </br>
+
+                <label for="src_link">Nguồn eBook</label>
+                <input type="text" id="src_link" name="src_link" placeholder="https://www.example.com/">
 
                 <label for="book_name">Tên Sách</label>
                 <input type="text" id="book_name" name="book_name">
 
                 <label for="author">Tác Giả</label>
                 <input type="text" id="author" name="author">
-
-
             </fieldset>
 
             <fieldset>
@@ -168,16 +193,18 @@
                     </optgroup>
                 </select>
 
-                <label>Vui lòng đọc kĩ điều khoản khi <b>QUYÊN GÓP</b> sách:</label>
-                <input type="checkbox" id="agree" value="agree" name="user_read" onclick="dongydieukhoan()"><label class="light"
-                for="development">Tôi đã đọc kĩ <a href="noiquy.html">điều khoản và nội quy thư viện</a></label><br>
-                
-                </br><label>Bạn có tài liệu ebook muốn đóng góp? <a href="quyengopebook.html">Nhấn vào đây!</a></label>
+                <label>Vui lòng đọc kĩ điều khoản khi <b>ĐÓNG GÓP</b> ebook:</label>
+                <input type="checkbox" id="agree" value="agree" name="user_read" onclick="dongydieukhoan()"><label
+                    class="light" for="development">Tôi đã đọc kĩ <a href="noiquy.html">điều khoản và nội quy thư
+                        viện</a></label><br>
+
+                </br><label>Bạn có sách muốn quyên góp? <a href="quyengopsach.html">Nhấn vào đây!</a></label>
             </fieldset>
             <div id="mess_area"> </div>
-            <button type="submit" id="submit-form" disabled="true">Quyên Góp cho BCH 18CTT3</button>
+            <button type="submit" id="submit-form" disabled="true">Đóng Góp cho BCH 18CTT3</button>
         </form>
     </div>
     <div id="cuoitrang"></div>
 </body>
+
 </html>

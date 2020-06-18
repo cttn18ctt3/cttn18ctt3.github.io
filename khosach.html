@@ -6,21 +6,21 @@
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width = device-width, initial-scale = 1">
-    
-     <!-- phan jquery, btr, font easome, twimax -->
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+
+    <!-- phan jquery, btr, font easome, twimax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TimelineMax.min.js"></script>
-    
+
     <!-- phan script tu viet  -->
     <script src="script/allpage.js"></script>
 
-     <!-- phan css  -->
+    <!-- phan css  -->
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/style-khosach.css">
 
@@ -28,25 +28,23 @@
 </head>
 
 <body data-spy="scroll" data-target="#navbarResponsive">
-        
-        <!-- tao hieu ung loading -->
-        <div class="loading">
-            <div class="khoiload"></div>        
-        </div>
-    
+
+    <!-- tao hieu ung loading -->
+    <div class="loading">
+        <div class="khoiload"></div>
+    </div>
+
     <script>
-
-
-        hieuungdau = new TimelineMax({ onComplete: loading}); 
+        hieuungdau = new TimelineMax({ onComplete: loading });
         hieuungdau
-        .from($('.loading'),0.7,{opacity:0})
-        .from($('.khoiload'),0.7,{scale:2,opacity:0})
+            .from($('.loading'), 0.7, { opacity: 0 })
+            .from($('.khoiload'), 0.7, { scale: 2, opacity: 0 })
 
         // bat dau cho tien hanh lap lai vo tan, cung luc do thi cac cau lenh o phan khung ben duoi chay
-        function loading(){
-            hieuungload = new TimelineMax({repeat: -1}); 
-            hieuungload.to($('.khoiload'),1,{scale:0.3,ease:Power4.easeOut})
-            .to($('.khoiload'),1,{scale:1,ease: Elastic.easeOut.config(1, 0.3)})
+        function loading() {
+            hieuungload = new TimelineMax({ repeat: -1 });
+            hieuungload.to($('.khoiload'), 1, { scale: 0.3, ease: Power4.easeOut })
+                .to($('.khoiload'), 1, { scale: 1, ease: Elastic.easeOut.config(1, 0.3) })
         }
 
         var table = new Array();
@@ -54,31 +52,10 @@
         var query = "";
         var query_string;
 
-        function parse_query_string(query) {
-            var vars = query.split("&");
-            var query_string = {};
-            for (var i = 0; i < vars.length; i++) {
-                var pair = vars[i].split("=");
-                var key = decodeURIComponent(pair[0]);
-                var value = decodeURIComponent(pair[1]);
-                // If first entry with this name
-                if (typeof query_string[key] === "undefined") {
-                    query_string[key] = decodeURIComponent(value);
-                    // If second entry with this name
-                } else if (typeof query_string[key] === "string") {
-                    var arr = [query_string[key], decodeURIComponent(value)];
-                    query_string[key] = arr;
-                    // If third or later entry with this name
-                } else {
-                    query_string[key].push(decodeURIComponent(value));
-                }
-            }
-            return query_string;
-        }
-
         function ShowSelectPagePanel(table, container, curPage) {
             var panel = document.createElement('div');
             panel.id = 'page_panel';
+            container.insertAdjacentHTML('beforeend', '</br></br></br>');
             container.insertAdjacentElement('beforeend', panel);
 
             panel.className = "center";
@@ -127,12 +104,12 @@
 
         }
 
-        function dunghieuung( ){
+        function dunghieuung() {
             timeline = new TimelineMax({});
-            timeline.to($('.khoiload'),0.8,{scale:7,opacity:0,ease:Power4.easeOut})
-            timeline.to($('.loading'),0.8,{x:-2200,ease:Power1.easeOut})
-            timeline = new TimelineMax({paused: true});
-        
+            timeline.to($('.khoiload'), 0.8, { scale: 7, opacity: 0, ease: Power4.easeOut })
+            timeline.to($('.loading'), 0.8, { x: -2200, ease: Power1.easeOut })
+            timeline = new TimelineMax({ paused: true });
+
         }
 
         function ShowData(table, callback) {
@@ -177,6 +154,12 @@
             for (var j = start; j < end; ++j) {
 
                 ele = table[j];
+
+                var muon = '<a href="muonsach.html?selectedItem=' + ele["id"] + '"><i class="fas fa-shopping-cart"></i></a> ';
+                if (ele.type == "ebook") {
+                    muon = '<a href="' + ele.link + '" target="_blank"><i class="fas fa-download"></i></a> '
+                }
+
                 if ((j % 12) % 4 == 0) {
                     dt = document.getElementsByClassName("listsach")[0];
                     var text =
@@ -184,11 +167,11 @@
                             '<div class="row my_file_output">' +
                             '<div class="motcuonsach col-sm-3">' +
                             '<div class="tren">' +
-                            '<img class="layer1 h-100 w-100" src="'+ ele["imglink"] +'" alt="">' +
+                            '<img class="layer1 h-100 w-100" src="' + ele["imglink"] + '" alt="">' +
                             '<div class="layer2 h-100 w-100 "></div>' +
                             '<div class="layer3 h-100 w-100">' +
-                        '<a class="thongtin-btn" onclick= "nutthongtin('+  ele["id"]   +')"><i class="fa fa-info-circle" aria-hidden="true"></i></a> ' +
-                            '<a href="muonsach.html?selectedItem=' + ele["id"] + '"><i class="fas fa-shopping-cart"></i></a> ' +
+                            '<a class="thongtin-btn" onclick= "nutthongtin(' + ele["id"] + ')"><i class="fa fa-info-circle" aria-hidden="true"></i></a> ' +
+                            muon +
                             '</div>' +
                             '</div>' +
                             '<div class="duoi">' +
@@ -199,14 +182,15 @@
 
                 } else {
                     dt = document.getElementsByClassName("my_file_output");
+
                     dt[dt.length - 1].insertAdjacentHTML('beforeend',
                         '<div class="motcuonsach col-sm-3">' +
                         '<div class="tren ">' +
-                        '<img class="layer1 h-100 w-100" src="'+ ele["imglink"] +'" alt="">' +
+                        '<img class="layer1 h-100 w-100" src="' + ele["imglink"] + '" alt="">' +
                         '<div class="layer2 h-100 w-100 "></div>' +
                         ' <div class="layer3 h-100 w-100">' +
-                        '<a class="thongtin-btn" onclick= "nutthongtin('+  ele["id"]   +')"><i class="fa fa-info-circle" aria-hidden="true"></i></a> ' +
-                        '<a href="muonsach.html?selectedItem=' + ele["id"] + '"><i class="fas fa-shopping-cart"></i></a> ' +
+                        '<a class="thongtin-btn" onclick= "nutthongtin(' + ele["id"] + ')"><i class="fa fa-info-circle" aria-hidden="true"></i></a> ' +
+                        muon +
                         '</div>' +
                         '</div>' +
 
@@ -247,9 +231,9 @@
 
 
 
-       <!-- Khu vuc chua cac dau sach -->
+    <!-- Khu vuc chua cac dau sach -->
     <section>
-        <div class="container listsach  ">
+        <div class="container listsach">
         </div>
     </section>
 
@@ -258,39 +242,37 @@
     <!-- modal box, dung de hien thi thong tin sach -->
     <div id="modal_box">
         <div id="modal_content">
-            <h1>Thông tin chi tiết về sách</h1>
-            <img src="" id="link_sach">
+            <h1>Thông tin chi tiết về tài liệu</h1>
+            <img src="" id="link_img">
             <table style="width:100%">
                 <tr>
-                    <td>Nhà Xuất Bản</td>
-                    <td id="nxb_sach"></td>
+                    <td>Tên tài liệu</td>
+                    <td id="ten_sach"></td>
                 </tr>
                 <tr>
-                    <td>Kích Thước</td>
-                    <td id="kichthuoc_sach"></td>
+                    <td>Kiểu tài liệu</td>
+                    <td id="kieu_sach"></td>
                 </tr>
                 <tr>
-                    <td>Tác Giả</td>
+                    <td>Tác giả</td>
                     <td id="tacgia_sach"></td>
                 </tr>
                 <tr>
-                    <td>Loại Bìa</td>
-                    <td id="loaibia_sach"></td>
+                    <td>Người quyên góp</td>
+                    <td id="nguoi_donggop"></td>
                 </tr>
                 <tr>
-                    <td>Số trang</td>
-                    <td id="sotrang_sach"></td>
+                    <td>Tình trạng</td>
+                    <td id="tinhtrang_sach"></td>
                 </tr>
             </table>
-            <h2>Giới thiệu sách</h2>
+            <h2>Giới thiệu</h2>
             <p id="mota_sach">
             </p>
         </div>
     </div>
     <!-- nen cho modal box -->
     <div id="momo" onclick="nutmomo()"></div>
-
-
 
     <section class="chenep "></section>
     <section class="chenep "></section>
@@ -307,7 +289,7 @@
         }
 
         function nutthongtin(idsach) {
-                        
+
             var data = "&cmd=getTableItem&selectedItem=" + idsach;
 
             $.ajax({
@@ -327,18 +309,17 @@
                             form.removeChild(form.firstChild);
                         }
                     } else {
-                        document.getElementById("link_sach").src= cell["imglink"];   
-                        document.getElementById("nxb_sach").innerHTML= "Nhà Xuất Bản Giáo Dục";   
-                        document.getElementById("kichthuoc_sach").innerHTML= "15cm 20cm 30cm";   
-                        document.getElementById("tacgia_sach").innerHTML= cell["author"];   
-                        document.getElementById("loaibia_sach").innerHTML= "Mềm mịn như da mông em bé";  
-                        document.getElementById("sotrang_sach").innerHTML= "Trên 10 trang";  
-                        document.getElementById("mota_sach").innerHTML= cell["description"];  
+                        document.getElementById("link_img").src = cell.imglink;
+                        document.getElementById("ten_sach").innerHTML = cell.book_name;
+                        document.getElementById("kieu_sach").innerHTML = (cell.type == "ebook") ? "Sách điện tử" : "Sách truyền thống";
+                        document.getElementById("tacgia_sach").innerHTML = cell.author;
+                        document.getElementById("nguoi_donggop").innerHTML = cell.name + ' - ' + cell.donator_id;
+                        document.getElementById("tinhtrang_sach").innerHTML = cell.status;
+                        document.getElementById("mota_sach").innerHTML = cell.description;
                     }
                 }
             });
 
-            
             var momo = document.getElementById("momo");
             momo.classList.add("hienra");
             var modalbox = document.getElementById("modal_box");

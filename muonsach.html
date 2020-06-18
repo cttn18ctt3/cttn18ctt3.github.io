@@ -24,7 +24,6 @@
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/style-muonsach.css">
     <link rel="stylesheet" href="style/style-quyengopsach.css">
-
 </head>
 
 <body data-spy="scroll" data-target="#navbarResponsive">
@@ -39,28 +38,6 @@
         var query_string;
         var book_param = "";
 
-        function parse_query_string(query) {
-            var vars = query.split("&");
-            var query_string = {};
-            for (var i = 0; i < vars.length; i++) {
-                var pair = vars[i].split("=");
-                var key = decodeURIComponent(pair[0]);
-                var value = decodeURIComponent(pair[1]);
-                // If first entry with this name
-                if (typeof query_string[key] === "undefined") {
-                    query_string[key] = decodeURIComponent(value);
-                    // If second entry with this name
-                } else if (typeof query_string[key] === "string") {
-                    var arr = [query_string[key], decodeURIComponent(value)];
-                    query_string[key] = arr;
-                    // If third or later entry with this name
-                } else {
-                    query_string[key].push(decodeURIComponent(value));
-                }
-            }
-            return query_string;
-        }
-
         $(document).ready(function () {
 
             // danh cho viec thong bao
@@ -70,7 +47,6 @@
                 $('.momo').removeClass('hienra');
                 $('.modal_box').removeClass('modal_show');
             });
-
 
             query = window.location.search.substring(1);
             query_string = parse_query_string(query);
@@ -95,7 +71,7 @@
                     success: function (data) {
 
                         thongbao = document.getElementById("modal_content");
-                        if (data["result"] == 'false') {
+                        if (data["result"] == 'error') {
                             thongbao.insertAdjacentHTML('beforeend', '<p>Đã có lỗi xảy ra, thông thể mượn sách</p>');
                             $('.momfo').addClass('hienra');
                             $('.modal_box').addClass('modal_show');
@@ -135,12 +111,11 @@
                         $('.momo').addClass('hienra');
                         $('.modal_box').addClass('modal_show');
 
-
                     } else {
 
                         // chinh lai anh 
                         anhsach = document.getElementById("anhsach");
-                        anhsach.innerHTML =  '<img src="' + cell["imglink"] + '" alt="" >'
+                        anhsach.innerHTML =  '<img src="' + cell["imglink"] + '" alt="">'
 
                         book_param = book_param + "&id_book=" + query_string["selectedItem"]
                             + "&book_name=" + cell["book_name"];
@@ -163,9 +138,8 @@
                         dt.insertAdjacentHTML('beforeend',
                             '<tr>' +
                             '<td>Người Quyên Góp</td>' +
-                            '<td>' + cell["name"] + '-' + cell["donator_id"] + '</td>' +
-                            '</tr>');
-
+                            '<td>' + cell["name"] + ' - ' + cell["donator_id"] + '</td>' +
+                            '</tr></br>');
 
                         // chen tom tat noi dung
                         thongtinsach.insertAdjacentHTML('beforeend', '<p>' + cell["description"] + '</p>');
@@ -175,22 +149,6 @@
             });
         }
 
-    </script>
-    
-    <script>
-        function dongydieukhoan() {
-            console.log(444);
-            // Get the checkbox
-            var checkBox = document.getElementById("agree");
-
-            // If the checkbox is checked, display the button
-            var button = document.getElementById("submit-form");
-            if (checkBox.checked == true){
-                button.disabled = false;
-            } else {
-                button.disabled = true;
-            }
-        }
     </script>
 
     <!-- dau trang de chua nav  -->
@@ -220,34 +178,10 @@
         <img class="banner-quyengopsach w-100 " src="img/banner-quyengop.png">
 
         <div>
+            <div id="anhsach" style="text-align: center;"><i class="fas fa-circle-notch fa-spin"></i></div>
             <div id="book-info">
-
-                <div id="anhsach" style="text-align: center;"><i class="fas fa-circle-notch fa-spin"></i></div>
-              
-                <table id="bang" style="width:100%">
-                    <tr>
-                        <th>Nhà Xuất Bản</th>
-                        <th><i class="fas fa-circle-notch fa-spin"></i></th>
-                    </tr>
-                    <tr>
-                        <td>Kích Thước</td>
-                        <td><i class="fas fa-circle-notch fa-spin"></i></td>
-                    </tr>
-                    <tr>
-                        <td>Tác Giả</td>
-                        <td><i class="fas fa-circle-notch fa-spin"></i></td>
-                    </tr>
-                    <tr>
-                        <td>Loại Bìa</td>
-                        <td><i class="fas fa-circle-notch fa-spin"></i></td>
-                    </tr>
-                    <tr>
-                        <td>Số trang</td>
-                        <td><i class="fas fa-circle-notch fa-spin"></i></td>
-                    </tr>
-                </table>
                 <h2>Tóm Tắt Nội Dung</h2>
-
+                <table id="bang" style="width:100%"></table>
             </div>
         </div>
 
@@ -259,8 +193,8 @@
                 <label for="name">Họ và Tên</label>
                 <input type="text" id="name" name="name">
 
-                <label for="id-user">MSSV</label>
-                <input type="text" id="id-user" name="id-user">
+                <label for="id_user">MSSV</label>
+                <input type="text" id="id_user" name="id-user">
 
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email">
@@ -279,12 +213,12 @@
 
             </fieldset>
 
-            <label>Vui lòng đọc kĩ điều khoản khi cho <B>MƯỢN</B> sách:</label>
+            <label>Vui lòng đọc kĩ điều khoản khi <b>MƯỢN</b> sách:</label>
             <input type="checkbox" id="agree" value="agree" name="user_read" onclick="dongydieukhoan()"><label class="light" >Tôi
-                đã đọc kĩ và hoàn toàn đồng ý với <a href="noiqui.html">điều khoản</a></label><br>
+                đã đọc kĩ và hoàn toàn đồng ý với <a href="noiquy.html">điều khoản và nội quy thư viện</a></label><br>
 
             <div id="mess_area"> </div>
-            <button type="submit" id="submit-form" disabled="true">Mượn Sách Về Nhà Thôi !</button>
+            <button type="submit" id="submit-form" disabled="true">Mượn Sách Về Nhà Thôi!</button>
         </form>
     </div>
 
