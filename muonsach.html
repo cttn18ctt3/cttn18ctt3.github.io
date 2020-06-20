@@ -5,22 +5,22 @@
     <meta charset="utf-8">
     <title>Mượn Sách</title>
     <meta name="viewport" content="width = device-width, initial-scale = 1">
-     
+
     <!-- phan jquery, btr, font easome, twimax -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TimelineMax.min.js"></script>
-    
+
     <!-- phan script tu viet  -->
     <script src="script/allpage.js"></script>
     <script src="script/khosach-script.js"></script>
-    
-     <!-- phan css  -->
+
+    <!-- phan css  -->
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/style-muonsach.css">
     <link rel="stylesheet" href="style/style-quyengopsach.css">
@@ -30,13 +30,14 @@
 
     <!-- tao hieu ung loading -->
     <div class="loading">
-        <div class="khoiload"></div>        
+        <div class="khoiload"></div>
     </div>
 
     <script type="text/javascript">
         var query = "";
         var query_string;
         var book_param = "";
+        var json = {}
 
         $(document).ready(function () {
 
@@ -59,29 +60,41 @@
                 while (dt.firstChild) {
                     dt.removeChild(dt.firstChild);
                 }
-                var data = $('form#test-form').serialize();
+                var form = $('form#test-form');
+                var arrayInput = form.serializeArray();
 
-                data = "&cmd=insertData&" + data + book_param + "&status=Chờ xác nhận";
+                for (var i in arrayInput) {
+                    json[arrayInput[i].name] = arrayInput[i].value;
+                    if (arrayInput[i].value === "") {
+                        alert("Please fill out all box!");
+                        return false;
+                    }
+                }
+
+                json.cmd = 'insertData';
+                json.replyEmail = true;
+
                 $.ajax({
-                    type: 'GET',
-                    url: 'https://script.google.com/macros/s/AKfycbyBXyR1Q5jw0g241-jOOq6to2i6SbAVVzh6DzrVF5aGK-GpXWad/exec',
-                    dataType: 'json',
+                    type: 'post',
+                    url: 'https://script.google.com/macros/s/AKfycbycax-lzEh61c1b3EH3RetVfLqkCShlwQ2MEVk2FY9mzv98gHjW/exec',
                     crossDomain: true,
-                    data: data,
+                    data: JSON.stringify(json),
                     success: function (data) {
 
                         thongbao = document.getElementById("modal_content");
                         if (data["result"] == 'error') {
-                            thongbao.insertAdjacentHTML('beforeend', '<p>Đã có lỗi xảy ra, thông thể mượn sách</p>');
+                            thongbao.insertAdjacentHTML('beforeend', '<p>Đã có lỗi xảy ra, thông thể đăng kí mượn sách</p>');
                             $('.momfo').addClass('hienra');
                             $('.modal_box').addClass('modal_show');
                         } else {
-                            dt.insertAdjacentHTML('beforeend', '<p>Mượn Sách Thành Công</p>');
+                            thongbao.insertAdjacentHTML('beforeend', '<p> Đăng kí mượn sách thành công, vui lòng kiểm tra email</p>');
                             $('.momo').addClass('hienra');
                             $('.modal_box').addClass('modal_show');
                         }
                     }
                 });
+
+                alert("Bạn vừa thực hiện thao tác mượn sách, vui lòng đợi trong giây lát...");
                 return false;
             });
 
@@ -96,7 +109,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
+                url: 'https://script.google.com/macros/s/AKfycbzYiaWH-Ohrx5TblFGFTjWd_LEYODqvPYf2YdEev_JFSEf_FsY/exec',
                 dataType: 'json',
                 crossDomain: true,
                 data: data,
@@ -115,11 +128,13 @@
 
                         // chinh lai anh 
                         anhsach = document.getElementById("anhsach");
-                        anhsach.innerHTML =  '<img src="' + cell["imglink"] + '" alt="">'
+                        anhsach.innerHTML = '<img src="' + cell["imglink"] + '" alt="">'
 
                         book_param = book_param + "&id_book=" + query_string["selectedItem"]
                             + "&book_name=" + cell["book_name"];
 
+                        json.id_book = query_string.selectedItem;
+                        json.book_name = cell.book_name;
 
                         // chen ten sach
                         thongtinsach = document.getElementById("book-info");
@@ -162,10 +177,9 @@
     <div class="modal_box ">
         <div id="modal_content">
             <h1>Thông Báo</h1>
-            <p>Bạn đã mượn sách thành công</p>
-            <a class="btn btn-primary" href="khosach.html" style="    width: 50%;
-            margin-left: 25%;">Quay Về Kho Sách</a>
         </div>
+        <a class="btn btn-primary" href="khosach.html" style="    width: 50%;
+            margin-left: 25%;">Quay Về Kho Sách</a>
     </div>
 
 
@@ -194,7 +208,7 @@
                 <input type="text" id="name" name="name">
 
                 <label for="id_user">MSSV</label>
-                <input type="text" id="id_user" name="id-user">
+                <input type="text" id="id_user" name="id_user">
 
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email">
@@ -214,7 +228,8 @@
             </fieldset>
 
             <label>Vui lòng đọc kĩ điều khoản khi <b>MƯỢN</b> sách:</label>
-            <input type="checkbox" id="agree" value="agree" name="user_read" onclick="dongydieukhoan()"><label class="light" >Tôi
+            <input type="checkbox" id="agree" value="agree" name="user_read" onclick="dongydieukhoan()"><label
+                class="light">Tôi
                 đã đọc kĩ và hoàn toàn đồng ý với <a href="noiquy.html">điều khoản và nội quy thư viện</a></label><br>
 
             <div id="mess_area"> </div>

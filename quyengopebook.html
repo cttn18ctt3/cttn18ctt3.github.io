@@ -95,7 +95,7 @@
 
                         $.ajax({
                             type: 'post',
-                            url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
+                            url: 'https://script.google.com/macros/s/AKfycbzYiaWH-Ohrx5TblFGFTjWd_LEYODqvPYf2YdEev_JFSEf_FsY/exec',
 
                             data: JSON.stringify(json),
 
@@ -107,10 +107,12 @@
 
                                 } else {
                                     console.log(JSON.stringify(data));
-                                    dt.insertAdjacentHTML('beforeend', '<font color="green">Data sent!</font><br>');
+                                    dt.insertAdjacentHTML('beforeend', '<font color="green">Bạn đã quyên góp thành công, vui lòng kiểm tra email!</font><br>');
                                 }
                             }
                         });
+
+                        alert("Bạn vừa thực hiện thao tác quyên góp ebook, vui lòng đợi trong giây lát...");
                     }
                     reader2.readAsDataURL(f2);
                 }

@@ -155,10 +155,21 @@
 
                 ele = table[j];
 
-                var muon = '<a href="muonsach.html?selectedItem=' + ele["id"] + '"><i class="fas fa-shopping-cart"></i></a> ';
-                if (ele.type == "ebook") {
-                    muon = '<a href="' + ele.link + '" target="_blank"><i class="fas fa-download"></i></a> '
+                var muon = "";
+                if (ele.status !== "Đã kiểm duyệt") {
+                    muon = '<a onclick= "alert(' + "'Tài liệu chưa được kiểm duyệt nên tạm thời chưa thể xem!'" +')"><i class="fa fa-ban" aria-hidden="true"></i></a> ';
                 }
+                else {
+
+                    if (ele.type == "ebook") {
+                        muon = '<a href="' + ele.link + '" target="_blank"><i class="fas fa-download"></i></a> '
+                    }
+                    else {
+                        muon = '<a href="muonsach.html?selectedItem=' + ele["id"] + '"><i class="fas fa-shopping-cart"></i></a> ';
+                    }
+                }
+
+
 
                 if ((j % 12) % 4 == 0) {
                     dt = document.getElementsByClassName("listsach")[0];
@@ -214,7 +225,7 @@
 
         $.ajax({
             type: 'post',
-            url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
+            url: 'https://script.google.com/macros/s/AKfycbzYiaWH-Ohrx5TblFGFTjWd_LEYODqvPYf2YdEev_JFSEf_FsY/exec',
             crossDomain: true,
             data: JSON.stringify(json),
             success: function (data) {
@@ -294,7 +305,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: 'https://script.google.com/macros/s/AKfycbzhP56kb8NhWyCWB0DG6PH3gKljz-9PwUEwxF3JcN29x7VpuDqu/exec',
+                url: 'https://script.google.com/macros/s/AKfycbzYiaWH-Ohrx5TblFGFTjWd_LEYODqvPYf2YdEev_JFSEf_FsY/exec',
                 dataType: 'json',
                 crossDomain: true,
                 data: data,
