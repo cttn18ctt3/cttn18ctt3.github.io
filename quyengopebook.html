@@ -26,10 +26,32 @@
 <body data-spy="scroll" data-target="#navbarResponsive">
 
     <script type="text/javascript">
+        function saveCookie() {
+            var formData = $('form#test-form');
+            var arrayInput = formData.serializeArray();
+
+            var list = ["name", "donator_id", "email", "phone", "address"]
+            for (var i in arrayInput) {
+                if (list.includes(arrayInput[i].name)) setCookie(arrayInput[i].name, arrayInput[i].value, 365);
+            }
+        }
+
+        function loadCookie() {
+            $('input#name')[0].value = getCookie("name");
+            $('input#donator_id')[0].value = getCookie("donator_id");
+            $('input#email')[0].value = getCookie("email");
+            $('input#phone')[0].value = getCookie("phone");
+            $('textarea#address')[0].value = getCookie("address");
+        }
+    </script>
+
+    <script type="text/javascript">
 
         var json = {};
 
         $(document).ready(function () {
+            loadCookie();
+
             var submit = $("button[type='submit']");
             submit.click(function () {
                 dt = document.getElementById("mess_area");
@@ -100,19 +122,27 @@
                             data: JSON.stringify(json),
 
                             success: function (data) {
-                                dt = document.getElementById("mess_area");
+                                dt = document.getElementById("mess_area_r");
+
+                                while (dt.firstChild) {
+                                    dt.removeChild(dt.firstChild);
+                                }
+
                                 if (data == 'error') {
-                                    console.log(JSON.stringify(data));
                                     dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can\'t send data!</font><br>');
 
                                 } else {
-                                    console.log(JSON.stringify(data));
                                     dt.insertAdjacentHTML('beforeend', '<font color="green">Bạn đã quyên góp thành công, vui lòng kiểm tra email!</font><br>');
                                 }
+
+                                $('button#back_home')[0].disabled = false
                             }
                         });
 
-                        alert("Bạn vừa thực hiện thao tác quyên góp ebook, vui lòng đợi trong giây lát...");
+                        $('div#sec_body')[0].style.display = "block"
+                        $('div#main_body')[0].style.display = "none"
+
+                        saveCookie();
                     }
                     reader2.readAsDataURL(f2);
                 }
@@ -121,6 +151,10 @@
 
                 return false;
             });
+
+            $('button#back_home').click(function() {
+                window.location.href = window.location.href.substring(0, window.location.href.lastIndexOf("/"))
+            }); 
         });
     </script>
 
@@ -131,7 +165,7 @@
     <section class="chenep "></section>
 
     <!-- khu vuc banner -->
-    <div class="container">
+    <div class="container" id="main_body">
         <img class="banner-quyengopsach w-100 " src="img/banner-quyengop.png">
 
         <form id="test-form" autocomplete="off">
@@ -205,6 +239,20 @@
             <div id="mess_area"> </div>
             <button type="submit" id="submit-form" disabled="true">Đóng Góp cho BCH 18CTT3</button>
         </form>
+    </div>
+    <div class="container" id="sec_body" style="display: none;">
+        <div class="text-center">
+            </br></br></br></br></br></br>
+            <h3>
+                <p>Tài liệu của bạn đang được tải lên</p>
+            </h3>
+            <h4 id="mess_area_r">
+                <p>Vui lòng không đóng cửa sổ này cho đến khi hoàn tất...</p>
+            </h4>
+            </br></br></br></br></br></br>
+            <button id="back_home" disabled="true">Trở Về Trang Chủ</button>
+
+        </div>
     </div>
     <div id="cuoitrang"></div>
 </body>

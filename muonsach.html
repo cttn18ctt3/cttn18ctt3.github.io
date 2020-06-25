@@ -41,6 +41,7 @@
 
         $(document).ready(function () {
 
+            loadCookie()
             // danh cho viec thong bao
             // cho modal box
             $('.momo').click(function (e) {
@@ -81,20 +82,27 @@
                     data: JSON.stringify(json),
                     success: function (data) {
 
-                        thongbao = document.getElementById("modal_content");
-                        if (data["result"] == 'error') {
-                            thongbao.insertAdjacentHTML('beforeend', '<p>Đã có lỗi xảy ra, thông thể đăng kí mượn sách</p>');
-                            $('.momfo').addClass('hienra');
-                            $('.modal_box').addClass('modal_show');
-                        } else {
-                            thongbao.insertAdjacentHTML('beforeend', '<p> Đăng kí mượn sách thành công, vui lòng kiểm tra email</p>');
-                            $('.momo').addClass('hienra');
-                            $('.modal_box').addClass('modal_show');
+                        dt = document.getElementById("mess_area_r");
+
+                        while (dt.firstChild) {
+                            dt.removeChild(dt.firstChild);
                         }
+
+                        if (data == 'error') {
+                            dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can\'t send data!</font><br>');
+
+                        } else {
+                            dt.insertAdjacentHTML('beforeend', '<font color="green">Bạn đã yêu cầu mượn sách thành công, vui lòng kiểm tra email!</font><br>');
+                        }
+
+                        $('button#back_home')[0].disabled = false
                     }
                 });
 
-                alert("Bạn vừa thực hiện thao tác mượn sách, vui lòng đợi trong giây lát...");
+                $('div#sec_body')[0].style.display = "block"
+                $('div#main_body')[0].style.display = "none"
+
+                saveCookie();
                 return false;
             });
 
@@ -162,6 +170,10 @@
                     }
                 }
             });
+
+            $('button#back_home').click(function () {
+                window.location.href = window.location.href.substring(0, window.location.href.lastIndexOf("/")) + "/khosach.html";
+            });
         }
 
     </script>
@@ -187,7 +199,7 @@
     <section class="chenep "></section>
 
     <!-- khu vuc banner -->
-    <div class="container">
+    <div class="container" id="main_body" style="display: block;">
 
         <img class="banner-quyengopsach w-100 " src="img/banner-quyengop.png">
 
@@ -237,9 +249,20 @@
         </form>
     </div>
 
+    <div class="container" id="sec_body" style="display: none;">
+        <div class="text-center">
+            </br></br></br></br></br></br>
+            <h3>
+                <p>Yêu cầu của bạn đang được xử lý</p>
+            </h3>
+            <h4 id="mess_area_r">
+                <p>Vui lòng không đóng cửa sổ này cho đến khi hoàn tất...</p>
+            </h4>
+            </br></br></br></br></br></br>
+            <button id="back_home" disabled="true">Trở Về Kho Sách</button>
 
-
-    <!-- khu vuc thong tin quyen gop sach -->
+        </div>
+    </div>
 
     <!-- cuoi trang de chua footer -->
     <div id="cuoitrang"></div>

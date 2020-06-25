@@ -7,19 +7,19 @@
     <title>Quyên góp sách</title>
 
     <!-- phan jquery, btr, font easome, twimax -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-        
-        <!-- phan script tu viet  -->
-        <script src="script/allpage.js"></script>
-    
-        <!-- phan css  -->
-        <link rel="stylesheet" href="style/style.css">
-        <link rel="stylesheet" href="style/style-quyengopsach.css">
+
+    <!-- phan script tu viet  -->
+    <script src="script/allpage.js"></script>
+
+    <!-- phan css  -->
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/style-quyengopsach.css">
 
 </head>
 
@@ -30,6 +30,9 @@
         var json = {};
 
         $(document).ready(function () {
+
+            loadCookie();
+
             var submit = $("button[type='submit']");
             submit.click(function () {
                 dt = document.getElementById("mess_area");
@@ -57,7 +60,7 @@
 
                 var reader = new FileReader();
                 var fread = $('input[type=file]')[0];
-                
+
                 if (fread.files.length == 0) {
                     // no selected file
                     alert("Please select image!");
@@ -82,25 +85,38 @@
                         data: JSON.stringify(json),
 
                         success: function (data) {
-                            dt = document.getElementById("mess_area");
+                            dt = document.getElementById("mess_area_r");
+                            
+                            while (dt.firstChild) {
+                                dt.removeChild(dt.firstChild);
+                            }
+
                             if (data == 'error') {
-                                console.log(JSON.stringify(data));
                                 dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can\'t send data!</font><br>');
 
                             } else {
-                                console.log(JSON.stringify(data));
                                 dt.insertAdjacentHTML('beforeend', '<font color="green">Bạn đã quyên góp thành công, vui lòng kiểm tra email!</font><br>');
                             }
+                            
+                            $('button#back_home')[0].disabled = false
+
                         }
                     });
 
-                    alert("Bạn vừa thực hiện thao tác quyên góp sách, vui lòng đợi trong giây lát...");
+                    $('div#sec_body')[0].style.display = "block"
+                    $('div#main_body')[0].style.display = "none"
+                    
+                    saveCookie();
                 }
 
                 reader.readAsDataURL(f);
 
                 return false;
             });
+
+            $('button#back_home').click(function() {
+                window.location.href = window.location.href.substring(0, window.location.href.lastIndexOf("/"))
+            }); 
         });
     </script>
 
@@ -111,7 +127,7 @@
     <section class="chenep "></section>
 
     <!-- khu vuc banner -->
-    <div class="container">
+    <div class="container" id="main_body" style="display: block;">
         <img class="banner-quyengopsach w-100 " src="img/banner-quyengop.png">
 
         <form id="test-form" autocomplete="off">
@@ -171,15 +187,32 @@
                 </select>
 
                 <label>Vui lòng đọc kĩ điều khoản khi <b>QUYÊN GÓP</b> sách:</label>
-                <input type="checkbox" id="agree" value="agree" name="user_read" onclick="dongydieukhoan()"><label class="light"
-                for="development">Tôi đã đọc kĩ <a href="noiquy.html">điều khoản và nội quy thư viện</a></label><br>
-                
+                <input type="checkbox" id="agree" value="agree" name="user_read" onclick="dongydieukhoan()"><label
+                    class="light" for="development">Tôi đã đọc kĩ <a href="noiquy.html">điều khoản và nội quy thư
+                        viện</a></label><br>
+
                 </br><label>Bạn có tài liệu ebook muốn đóng góp? <a href="quyengopebook.html">Nhấn vào đây!</a></label>
             </fieldset>
             <div id="mess_area"> </div>
             <button type="submit" id="submit-form" disabled="true">Quyên Góp cho BCH 18CTT3</button>
         </form>
     </div>
+
+    <div class="container" id="sec_body" style="display: none;">
+        <div class="text-center">
+            </br></br></br></br></br></br>
+            <h3>
+                <p>Tài liệu của bạn đang được tải lên</p>
+            </h3>
+            <h4 id="mess_area_r">
+                <p>Vui lòng không đóng cửa sổ này cho đến khi hoàn tất...</p>
+            </h4>
+            </br></br></br></br></br></br>
+            <button id="back_home" disabled="true">Trở Về Trang Chủ</button>
+
+        </div>
+    </div>
     <div id="cuoitrang"></div>
 </body>
+
 </html>
